@@ -1,11 +1,17 @@
 /target
 /classes
+/uploads
 /checkouts
+config.clj
 profiles.clj
 pom.xml
 pom.xml.asc
+*.eastwood
 *.jar
 *.class
+*.calva
+*.clj-kondo
+*.lsp/*
 /.lein-*
 /.nrepl-port
 /.prepl-port
