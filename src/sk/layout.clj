@@ -28,8 +28,7 @@
      [:span.navbar-toggler-icon]]
     [:div#collapsibleNavbar.collapse.navbar-collapse
      [:ul.navbar-nav
-      [:li.nav-item [:a.nav-link {:href "#"} "Menu1"]]
-      [:li.nav-item [:a.nav-link {:href "#"} "Menu2"]]
+      [:li.nav-item [:a.nav-link {:href "/users"} "Dashboard"]]
       (when
        (or
         (= (user-level) "U")
@@ -56,7 +55,7 @@
      [:span.navbar-toggler-icon]]
     [:div#collapsibleNavbar.collapse.navbar-collapse
      [:ul.navbar-nav
-      [:li.nav-item [:a.nav-link {:href "/home/login"} "Login"]]]]]))
+      [:li.nav-item [:a.nav-link {:href "/home/login"} "Entrar al sitio"]]]]]))
 
 (defn menus-none []
   (list
@@ -81,10 +80,11 @@
   (list
    (include-js "/js/jquery.js")
    (include-js "/popper/popper.min.js")
-   (include-js "/bootstrap/js/bootstrap.min.js")))
+   (include-js "/bootstrap/js/bootstrap.min.js")
+   (include-js "/js/extra.js")))
 
 (defn application [title ok js & content]
-  (html5 {:ng-app (:site-name config) :lang "es"}
+  (html5 {:ng-app (:site-name config) :lang "en"}
          [:head
           [:title (if title
                     title
@@ -124,8 +124,8 @@
            (menus-none)
            [:div {:style "padding-left:14px;"}
             [:div
-             [:p [:h3 [:b "Message: "]] content]
-             [:p [:h3 [:a {:href return-url} "Clic here to " [:strong "Continue"]]]]]]]
+             [:p [:h3 [:b "Mensaje: "]] [:h3 content]]
+             [:p [:h3 [:a {:href return-url} "Clic aqui para " [:strong "Continuar"]]]]]]]
 
           (app-js)
           nil]

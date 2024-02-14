@@ -12,12 +12,14 @@
   (let [title "home"
         ok (get-session-id)
         js nil
-        content [:h2.text-primary "Click on login to continue..."]]
+        content (if (> (get-session-id) 0)
+                  nil
+                  [:h2.text-primary "clic en Entrar al sitio!"])]
     (application title ok js content)))
 
 (defn login
   [_]
-  (let [title "Login"
+  (let [title "Entrar al sitio"
         ok (get-session-id)
         js nil
         content (main-view title)]
