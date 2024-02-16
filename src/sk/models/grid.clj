@@ -31,7 +31,7 @@
            [:th (st/upper-case field)]) fields)
     [:th.text-center {:colspan "2"}
      [:a.btn.btn-primary {:role "button"
-                          :style "width:100%"
+                          :style "width:98%"
                           :href (str href "/add")} new-button]]]))
 
 (defn build-table-body
@@ -43,16 +43,16 @@
                      (map (fn [db-field] [:td (db-field row)]) db-fields)
                      [:td.text-center {:colspan "2"}
                       [:a.btn.btn-primary {:role "button"
-                                           :style "width:45%;margin-right:10px;"
+                                           :style "width:49%;margin-right:2px;"
                                            :href (str href "/edit/" (:id row))} edit-button]
                       [:a.confirm.btn.btn-danger {:type "button"
-                                                  :style "width:45%;"
+                                                  :style "width:49%;"
                                                   :href (str href "/delete/" (:id row))} delete-button]]]))) rows)))
 
 (defn build-grid
   [title rows fields db-fields href search-placeholder search-button all-button new-button edit-button delete-button]
   (list
-   [:table.table.table-bordered.table-hover
+   [:table.table.table-bordered.table-hover.w-auto
     [:caption title]
     [:thead
      (build-table-head fields href search-placeholder search-button new-button all-button)]
@@ -98,7 +98,7 @@
 (defn build-dashboard
   [title rows fields db-fields href search-placeholder search-button all-button]
   (list
-   [:table.table.table-bordered.table-hover
+   [:table.table.table-bordered.table-hover.w-auto
     [:caption title]
     [:thead
      (build-dashboard-head fields href search-placeholder search-button all-button)]
