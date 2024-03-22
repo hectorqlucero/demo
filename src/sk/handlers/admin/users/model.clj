@@ -7,7 +7,7 @@
   (str
    "
     SELECT *,
-    DATE_FORMAT(dob,'%d de %M %Y','es_ES') as dob_formatted,
+    DATE_FORMAT(dob,'%d/%m/%Y') as dob_formatted,
     CASE
     WHEN level = 'U' THEN 'Usuario'
     WHEN level = 'A' THEN 'Administrador'
@@ -31,7 +31,7 @@
   (str
    "
     SELECT *,
-    DATE_FORMAT(dob,'%Y-%m-%d') as dob_formatted
+    DATE_FORMAT(dob,'%d/%m/%Y') as dob_formatted
     FROM users
     WHERE id = ?
     ORDER BY lastname,firstname
@@ -60,7 +60,7 @@
   FROM users
   WHERE
   "
-   "lastname LIKE '%" search "%' "
+   "LOWER(lastname) LIKE '%" search "%' "
    "OR LOWER(firstname) LIKE '%" search "%' "
    "OR LOWER(cell) LIKE '%" search "%' "
    "OR LOWER(phone) LIKE '%" search "%' "
