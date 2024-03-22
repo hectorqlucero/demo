@@ -65,6 +65,7 @@
    "OR LOWER(cell) LIKE '%" search "%' "
    "OR LOWER(phone) LIKE '%" search "%' "
    "OR LOWER(email) LIKE '%" search "%' "
+   "OR DATE_FORMAT(dob,'%d/%m/%Y') LIKE '%" search "%' "
    "OR LOWER(level) LIKE '%" search "%' "
    "OR LOWER(active) LIKE '%" search "%'"))
 
