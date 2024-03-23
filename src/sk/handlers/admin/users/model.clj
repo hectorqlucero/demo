@@ -48,6 +48,7 @@
   (str
    "
   SELECT *,
+   DATE_FORMAT(dob,'%d/%m/%Y') as dob_formatted,
    CASE 
    WHEN level = \"U\" THEN \"Usuario\"
    WHEN level = \"A\" THEN \"Administrador\"
