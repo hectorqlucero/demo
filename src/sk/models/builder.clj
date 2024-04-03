@@ -40,7 +40,7 @@
      "(:require [sk.layout :refer [application error-404]]\n"
      "[sk.models.util :refer [get-session-id user-level]]\n"
      "[sk.models.crud :refer [build-form-save build-form-delete]]\n"
-     "[" ns-root ".model :refer [get-" tabla " get-" tabla "-id get-" tabla "-search]]\n"
+     "[" ns-root ".model :refer [get-" tabla " get-" tabla "-id]]\n"
      "[" ns-root ".view :refer [" folder "-view " folder "-edit-view " folder "-add-view " folder "-modal-script]]))\n\n"
      "(defn " folder "[_]\n"
      "(let [title \"" titulo "\"\n"
@@ -80,16 +80,7 @@
      "result (build-form-delete table id)]\n"
      "(if (= result true)\n"
      "(error-404 \"Record se processo correctamente!\" \"" link "\")\n"
-     "(error-404 \"No se pudo procesar el record!\" \"" link "\"))))\n\n"
-     "(defn " folder "-search\n"
-     "[{params :params}]\n"
-     "(let [title \"Mantenimiento de " folder "\"\n"
-     "ok (get-session-id)\n"
-     "js nil\n"
-     "search-string (:search params)\n"
-     "rows (get-" folder "-search search-string)\n"
-     "content (" folder "-view title rows)]\n"
-     "(application title ok js content)))\n")))
+     "(error-404 \"No se pudo procesar el record!\" \"" link "\"))))\n\n")))
 
 (defn build-grid-model
   [options]
@@ -124,23 +115,7 @@
      "))\n\n"
      "(defn get-" folder "-id\n"
      "[id]\n"
-     "(first (Query db [get-" folder "-id-sql id])))\n\n"
-     "(defn get-" folder "-search-sql\n"
-     "[search]\n"
-     "(str\n"
-     "\"SELECT * \"\n"
-     "\"FROM " tabla " \"\n"
-     "\"WHERE \"\n"
-     "\"LOWER(id) like '%\" search \"%' \"\n"
-     (apply str (map (fn [col]
-                       (let [field (:field col)
-                             tipo (st/lower-case (:type col))]
-                         (when-not (= tipo "text")
-                           (str "\"OR LOWER(" field ") LIKE '%\" search \"%' \"\n")))) cols))
-     "))\n\n"
-     "(defn get-" folder "-search\n"
-     "[search]\n"
-     "(Query db (get-" folder "-search-sql (st/lower-case search))))\n")))
+     "(first (Query db [get-" folder "-id-sql id])))\n\n")))
 
 (defn build-grid-form-col
   [col]
@@ -196,8 +171,8 @@
      "(let [labels [" (apply str (map (fn [col] (str " " "\"" (st/upper-case (:field col)) "\"")) cols)) "]\n"
      "db-fields [" (apply str (map (fn [col] (str " " (keyword (:field col)))) cols)) "]\n"
      "fields (zipmap db-fields labels)\n"
-     "table-id " folder "_table\n"
-     "href \"" link "\"\n"
+     "table-id \"" folder "_table\"\n"
+     "href \"" link "\"]\n"
      "(build-grid title rows table-id fields href)))\n\n"
      "(defn build-" folder "-fields\n"
      "[row]\n"
