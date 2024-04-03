@@ -17,7 +17,7 @@
 
 (defn menus-private []
   (list
-   [:nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+   [:nav.navbar.navbar-expand-md.navbar-light.bg-light.fixed-top
     [:a.navbar-brand {:href "/"}
      [:img.rounded-circle {:src "/images/logo.png"
                            :alt (:site-name config)
@@ -44,7 +44,7 @@
 
 (defn menus-public []
   (list
-   [:nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+   [:nav.navbar.navbar-expand-md.navbar-light.bg-light.fixed-top
     [:a.navbar-brand {:href "/"}
      [:img.rounded-circle {:src "/images/logo.png"
                            :alt (:site-name config)
@@ -59,7 +59,7 @@
 
 (defn menus-none []
   (list
-   [:nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+   [:nav.navbar.navbar-expand-md.navbar-light.bg-light.fixed-top
     [:a.navbar-brand {:href "/"}
      [:img.rounded-circle {:src "/images/logo.png"
                            :alt (:site-name config)
@@ -73,14 +73,17 @@
 (defn app-css []
   (list
    (include-css "/bootstrap/css/bootstrap.min.css")
+   (include-css "/bootstrap/table/table.css")
    (include-css "/bootstrap/css/lumen.min.css")
    (include-css "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")))
 
 (defn app-js []
   (list
    (include-js "/js/jquery.js")
-   (include-js "/popper/popper.min.js")
-   (include-js "/bootstrap/js/bootstrap.min.js")
+   (include-js "/bootstrap/js/bootstrap.bundle.min.js")
+   (include-js "/bootstrap/table/table.js")
+   (include-js "/bootstrap/table/print/bootstrap-table-print.min.js")
+   (include-js "/bootstrap/table/locale/bootstrap-table-es-MX.min.js")
    (include-js "/js/extra.js")))
 
 (defn application [title ok js & content]
@@ -105,7 +108,7 @@
            [:div {:style "padding-left:14px;"} content]]
           (app-js)
           js]
-         [:footer.bg-secondary.text-center.fixed-bottom
+         [:footer.bg-light.text-center.fixed-bottom
           [:span  "Copyright &copy" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]))
 
 (defn error-404 [content return-url]

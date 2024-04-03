@@ -42,39 +42,6 @@
   (first (Query db [get-user-sql id])))
 ;; End get-user
 
-;; Start search-user
-(defn get-users-search-sql
-  [search]
-  (str
-   "
-  SELECT *,
-   DATE_FORMAT(dob,'%d/%m/%Y') as dob_formatted,
-   CASE 
-   WHEN level = \"U\" THEN \"Usuario\"
-   WHEN level = \"A\" THEN \"Administrador\"
-   ELSE \"Sistema\"
-   END level_formatted,
-   CASE
-   WHEN active = \"T\" THEN \"Activo\"
-   ELSE \"Inactivo\"
-   END active_formatted
-  FROM users
-  WHERE
-  "
-   "LOWER(lastname) LIKE '%" search "%' "
-   "OR LOWER(firstname) LIKE '%" search "%' "
-   "OR LOWER(cell) LIKE '%" search "%' "
-   "OR LOWER(phone) LIKE '%" search "%' "
-   "OR LOWER(email) LIKE '%" search "%' "
-   "OR DATE_FORMAT(dob,'%d/%m/%Y') LIKE '%" search "%' "
-   "OR LOWER(level) LIKE '%" search "%' "
-   "OR LOWER(active) LIKE '%" search "%'"))
-
-(defn get-users-search
-  [search]
-  (Query db (get-users-search-sql (st/lower-case search))))
-;; End search-user
-
 (comment
   (get-user 2)
   (get-users))

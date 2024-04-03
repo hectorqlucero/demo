@@ -12,16 +12,24 @@
 
 (defn users-view
   [title rows]
-  (let [fields ["APELLIDO PATERNO" "NOMBRE" "USUARIO" "FECHA DE NACIMIENTO" "CELULAR" "NIVEL" "STATUS"]
-        db-fields [:lastname :firstname :username :dob_formatted :cell :level_formatted :active_formatted]
-        href "/admin/users"
-        search-placeholder "Buscar aqui..."
-        search-button "Buscar"
-        all-button "Todos"
-        new-button "Nuevo Usuario"
-        edit-button "Editar"
-        delete-button "Borrar"]
-    (build-grid title rows fields db-fields href search-placeholder search-button all-button new-button edit-button delete-button)))
+  (let [table-id "users_table"
+        labels ["apellido paterno"
+                "nombre"
+                "usuario"
+                "fecha de nacimiento"
+                "celular"
+                "nivel"
+                "status"]
+        db-fields [:lastname
+                   :firstname
+                   :username
+                   :dob_formatted
+                   :cell
+                   :level_formatted
+                   :active_formatted]
+        fields (zipmap db-fields labels)
+        href "/admin/users"]
+    (build-grid title rows table-id fields href)))
 
 ;; Start users-form
 (defn build-users-fields
@@ -60,7 +68,7 @@
                  :name "dob"
                  :required "false"
                  :error nil
-                 :value (:dob_formatted row)})
+                 :value (:dob row)})
    (build-field {:label "Celular:"
                  :type "text"
                  :id "cell"

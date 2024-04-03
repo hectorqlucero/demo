@@ -3,13 +3,23 @@
 
 (defn users-view
   [title rows]
-  (let [fields ["APELLIDO PATERNO" "NOMBRE" "USUARIO" "FECHA DE NACIMIENTO" "CELULAR" "NIVEL" "STATUS"]
-        db-fields [:lastname :firstname :username :dob_formatted :cell :level_formatted :active_formatted]
-        href "/users"
-        search-placeholder "Buscar aqui..."
-        search-button "Buscar"
-        all-button "Todos"]
-    (build-dashboard title rows fields db-fields href search-placeholder search-button all-button)))
+  (let [table-id "users_table"
+        labels ["apellido paterno"
+                "nombre"
+                "usuario"
+                "fecha de nacimiento"
+                "celular"
+                "nivel"
+                "status"]
+        db-fields [:lastname
+                   :firstname
+                   :username
+                   :dob_formatted
+                   :cell
+                   :level_formatted
+                   :active_formatted]
+        fields (zipmap db-fields labels)]
+    (build-dashboard title rows table-id fields)))
 
 (comment
   (users-view "Usuarios" nil))

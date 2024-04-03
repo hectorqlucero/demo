@@ -2,107 +2,91 @@
   (:require [clojure.string :as st]
             [ring.util.anti-forgery :refer [anti-forgery-field]]))
 
-;; Start build-grid
-(defn grid-search
-  [href search-placeholder search-button all-button]
+;; start build-gid
+(defn build-grid-head
+  [href fields]
   (list
-   [:form {:method "post"
-           :action (str href "/search")}
-    (anti-forgery-field)
-    [:div.text-right
-     [:input {:type "text"
-              :id "search"
-              :name "search"
-              :placeholder search-placeholder
-              :style "margin-right:5px;"}]
-     [:input.btn.btn-primary {:type "submit"
-                              :value search-button
-                              :style "margin-right:5px;"}]
-     [:a.btn.btn-secondary {:role "button"
-                            :href (str href)} all-button]]]))
+   [:thead
+    [:tr
+     (map (fn [field]
+            (list
+             [:th {:data-sortable "true"
+                   :data-field (key field)} (st/upper-case (val field))]))
 
-(defn build-table-head
-  [fields href search-placeholder search-button new-button all-button]
-  (list
-   [:tr.bg-light
-    [:th {:colspan (str (+ (count fields) 2))} (grid-search href search-placeholder search-button all-button)]]
-   [:tr.bg-secondary
-    (map (fn [field]
-           [:th (st/upper-case field)]) fields)
-    [:th.text-center {:colspan "2"}
-     [:a.btn.btn-primary {:role "button"
-                          :style "width:98%"
-                          :href (str href "/add")} new-button]]]))
+          fields)
+     [:th.text-center [:a.btn.btn-primary {:role "button"
+                                           :href (str href "/add")} "Nuevo Record"]]]]))
 
-(defn build-table-body
-  [rows db-fields href edit-button delete-button]
+(defn build-grid-body
+  [rows href fields]
   (list
-   (map (partial (fn [row]
-                   (list
+   [:tbody
+    (map (partial (fn [row]
                     [:tr
-                     (map (fn [db-field] [:td (db-field row)]) db-fields)
-                     [:td.text-center {:colspan "2"}
+                     (map (fn [field]
+                            [:td ((key field) row)]) fields)
+                     [:td.text-center
                       [:a.btn.btn-primary {:role "button"
-                                           :style "width:49%;margin-right:2px;"
-                                           :href (str href "/edit/" (:id row))} edit-button]
-                      [:a.confirm.btn.btn-danger {:type "button"
-                                                  :style "width:49%;"
-                                                  :href (str href "/delete/" (:id row))} delete-button]]]))) rows)))
+                                           :style "margin:1px;"
+                                           :href (str href "/edit/" (:id row))} "Editar"]
+                      [:a.confirm.btn.btn-danger {:role "button"
+                                                  :style "margin:1px;"
+                                                  :href (str href "/delete/" (:id row))} "Borrar"]]])) rows)]))
 
 (defn build-grid
-  [title rows fields db-fields href search-placeholder search-button all-button new-button edit-button delete-button]
+  [title rows table-id fields href]
   (list
-   [:table.table.table-bordered.table-hover.w-auto
+   [:table.table {:id table-id
+                  :data-locale "es-MX"
+                  :data-toggle "table"
+                  :data-show-columns "true"
+                  :data-show-toggle "true"
+                  :data-show-print "false"
+                  :data-search "true"
+                  :data-pagination "true"
+                  :data-key-events "true"}
     [:caption title]
-    [:thead
-     (build-table-head fields href search-placeholder search-button new-button all-button)]
-    [:tbody (build-table-body rows db-fields href edit-button delete-button)]]))
+    (build-grid-head href fields)
+    (build-grid-body rows href fields)]))
 ;; End build-grid
 
-;; Start build-dashboard
-(defn dashboard-search
-  [href search-placeholder search-button all-button]
-  (list
-   [:form {:method "post"
-           :action (str href "/search")}
-    (anti-forgery-field)
-    [:div.text-right
-     [:input {:type "text"
-              :id "search"
-              :name "search"
-              :placeholder search-placeholder
-              :style "margin-right:5px;"}]
-     [:input.btn.btn-primary {:type "submit"
-                              :value search-button
-                              :style "margin-right:5px;"}]
-     [:a.btn.btn-secondary {:role "button"
-                            :href (str href)} all-button]]]))
-
+;; start build-dashboard
 (defn build-dashboard-head
-  [fields href search-placeholder search-button all-button]
+  [fields]
   (list
-   [:tr.bg-light
-    [:th {:colspan (str (count fields))} (dashboard-search href search-placeholder search-button all-button)]]
-   [:tr.bg-secondary
-    (map (fn [field]
-           [:th (st/upper-case field)]) fields)]))
+   [:thead
+    [:tr
+     (map (fn [field]
+            (list
+             [:th {:data-sortable "true"
+                   :data-field (key field)} (st/upper-case (val field))]))
+
+          fields)]]))
 
 (defn build-dashboard-body
-  [rows db-fields href]
+  [rows fields]
   (list
-   (map (partial (fn [row]
-                   (list
+   [:tbody
+    (map (partial (fn [row]
                     [:tr
-                     (map (fn [db-field] [:td (db-field row)]) db-fields)]))) rows)))
+                     (map (fn [field]
+                            [:td ((key field) row)]) fields)])) rows)]))
 
 (defn build-dashboard
-  [title rows fields db-fields href search-placeholder search-button all-button]
+  [title rows table-id fields]
   (list
-   [:table.table.table-bordered.table-hover.w-auto
+   [:table.table {:id table-id
+                  :data-locale "es-MX"
+                  :data-toggle "table"
+                  :data-show-columns "true"
+                  :data-show-toggle "true"
+                  :data-show-print "true"
+                  :data-search "true"
+                  :data-pagination "true"
+                  :data-key-events "true"}
     [:caption title]
-    [:thead
-     (build-dashboard-head fields href search-placeholder search-button all-button)]
-    [:tbody (build-dashboard-body rows db-fields href)]]))
+    (build-dashboard-head fields)
+    (build-dashboard-body rows fields)]))
 ;; End build-dashboard
 
 ;; Start build-modal

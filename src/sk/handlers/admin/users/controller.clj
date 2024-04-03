@@ -5,8 +5,7 @@
             [sk.models.crud :refer [build-form-save
                                     build-form-delete]]
             [sk.handlers.admin.users.model :refer [get-users
-                                                   get-user
-                                                   get-users-search]]
+                                                   get-user]]
             [sk.handlers.admin.users.view :refer [users-view
                                                   users-edit-view
                                                   users-add-view
@@ -56,13 +55,3 @@
     (if (= result true)
       (error-404 "Record se processo correctamente!" "/admin/users")
       (error-404 "No se pudo processar el record!" "/admin/users"))))
-
-(defn users-search
-  [{params :params}]
-  (let [title "Mantenimiento de usuarios"
-        ok (get-session-id)
-        js nil
-        search-string (:search params)
-        rows (get-users-search search-string)
-        content (users-view title rows)]
-    (application title ok js content)))

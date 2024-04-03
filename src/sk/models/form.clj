@@ -4,7 +4,7 @@
 (defn login-form
   [title href]
   (list
-   [:div.container.border.w-25.bg-secondary
+   [:div.container.border.w-25.bg-light
     [:legend title]
     [:form {:method "POST"
             :action href}
@@ -138,7 +138,7 @@
 (defn form
   [href fields buttons]
   (list
-   [:div.container.border.bg-secondary
+   [:div.container.border.bg-light
     [:form {:method "POST"
             :action href}
      (anti-forgery-field)
