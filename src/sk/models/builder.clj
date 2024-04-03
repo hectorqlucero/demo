@@ -26,6 +26,7 @@
                         "(application title ok nil \"" security-comments-2 "\"))")
     (= security 3) (str "(application title ok js content)")))
 
+;; Start build-grid
 (defn build-grid-controller
   [options]
   (let [folder (:folder options)
@@ -226,6 +227,109 @@
     :link (str "/admin/" table)
     :root "src/sk/handlers/admin/"})
   (println (str "Codigo generado en: src/sk/handlers/admin/" table)))
+;; End build-grid
+
+;; Start build-dashboard
+(defn build-dashboard-controller
+  [options]
+  (let [folder (:folder options)
+        titulo (:title options)
+        tabla (:table options)
+        root (:root options)
+        link (:link options)
+        security (:secure options)
+        ns-root (subs (str (st/replace root #"/" ".") folder) 4)]
+    (str
+     "(ns " ns-root ".controller\n"
+     "(:require [sk.layout :refer [application]]\n"
+     "[sk.models.util :refer [get-session-id]]\n"
+     "[" ns-root ".model :refer [get-" tabla "]]\n"
+     "[" ns-root ".view :refer [" tabla "-view]]))\n\n"
+     "(defn " folder "[_]\n"
+     "(let [title \"" titulo "\"\n"
+     "ok (get-session-id)\n"
+     "js nil\n"
+     "rows (get-" folder ")\n"
+     "content (" folder "-view title rows)]\n"
+     (process-security security) "))\n\n")))
+
+(defn build-dashboard-model
+  [options]
+  (let [folder (:folder options)
+        tabla (:table options)
+        root (:root options)
+        link (:link options)
+        ns-root (subs (str (st/replace root #"/" ".") folder) 4)
+        data (get-table-describe tabla)
+        cols (rest data)]
+    (str
+     "(ns " ns-root ".model\n"
+     "(:require [sk.models.crud :refer [Query db]]\n"
+     "[clojure.string :as st]))\n\n"
+     "(def get-" folder "-sql\n"
+     "(str\n"
+     "\"\n"
+     "SELECT *\n"
+     "FROM " tabla "\n"
+     "\"\n"
+     "))\n\n"
+     "(defn get-" folder "\n"
+     "[]\n"
+     "(Query db get-" folder "-sql))\n\n"
+     "(def get-" folder "-id-sql\n"
+     "(str\n"
+     "\"\n"
+     "SELECT *\n"
+     "FROM " tabla "\n"
+     "WHERE id = ?\n"
+     "\"\n"
+     "))\n\n"
+     "(defn get-" folder "-id\n"
+     "[id]\n"
+     "(first (Query db [get-" folder "-id-sql id])))\n\n")))
+
+(defn build-dashboard-view
+  [options]
+  (let [folder (:folder options)
+        tabla (:table options)
+        root (:root options)
+        link (:link options)
+        ns-root (subs (str (st/replace root #"/" ".") folder) 4)
+        data (get-table-describe tabla)
+        cols (rest data)]
+    (str
+     "(ns " ns-root ".view\n"
+     "(:require [sk.models.grid :refer [build-dashboard]]))\n\n"
+     "(defn " folder "-view\n"
+     "[title rows]\n"
+     "(let [table-id \"" folder "_table\"\n"
+     "labels [" (apply str (map (fn [col] (str " " "\"" (st/upper-case (:field col)) "\"")) cols)) "]\n"
+     "db-fields [" (apply str (map (fn [col] (str " " (keyword (:field col)))) cols)) "]\n"
+     "fields (zipmap db-fields labels)]\n"
+     "(build-dashboard title rows table-id fields)))\n")))
+
+(defn build-dashboard-skeleton
+  "secure: 1=s/a, 2=s, 3=all"
+  [options]
+  (let [folder (:folder options)
+        root (:root options)
+        path (str root folder)]
+    (create-path path)
+    (spit (str path "/controller.clj") (build-dashboard-controller options))
+    (spit (str path "/model.clj") (build-dashboard-model options))
+    (spit (str path "/view.clj") (build-dashboard-view options))))
+
+(defn build-dashboard
+  [table]
+  (build-dashboard-skeleton
+   {:folder table
+    :title (st/capitalize table)
+    :table table
+    :secure 3
+    :link (str "/" table)
+    :root "src/sk/handlers/"})
+  (println (str "Codigo generado en: src/sk/handlers/" table)))
+;; End build-dashboard
 
 (comment
   (build-grid "contactos"))
