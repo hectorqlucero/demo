@@ -25,7 +25,7 @@
                     [:tr
                      (map (fn [field]
                             [:td ((key field) row)]) fields)
-                     [:td.text-center
+                     [:td.text-nowrap.text-center
                       [:a.btn.btn-primary {:role "button"
                                            :style "margin:1px;"
                                            :href (str href "/edit/" (:id row))} "Editar"]
