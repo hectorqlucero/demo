@@ -36,7 +36,7 @@
 (defn build-grid
   [title rows table-id fields href]
   (list
-   [:table.table {:id table-id
+   [:table.table.table-sm {:id table-id
                   :data-locale "es-MX"
                   :data-toggle "table"
                   :data-show-columns "true"
@@ -75,7 +75,7 @@
 (defn build-dashboard
   [title rows table-id fields]
   (list
-   [:table.table {:id table-id
+   [:table.table.table-sm {:id table-id
                   :data-locale "es-MX"
                   :data-toggle "table"
                   :data-show-columns "true"
