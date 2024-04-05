@@ -10,7 +10,7 @@
             :action href}
      (anti-forgery-field)
      [:div.form-group
-      [:label {:for "username"} "Email:"]
+      [:label.font-weight-bold {:for "username"} "Email:"]
       [:input.form-control {:id "username"
                             :name "username"
                             :type "email"
@@ -19,7 +19,7 @@
                             :oninput "this.setCustomValidity('')"
                             :placeholder "Email aqui..."}]]
      [:div.form-group
-      [:label {:for "password"} "Contraseña:"]
+      [:label.font-weight-bold {:for "password"} "Contraseña:"]
       [:input.form-control {:id "password"
                             :name "password"
                             :required "true"
@@ -44,7 +44,7 @@
   [args]
   (list
    [:div.form-group
-    [:label {:for (:name args)} (:label args)]
+    [:label.font-weight-bold {:for (:name args)} (:label args)]
     [:input.form-control {:type (:type args)
                           :id (:id args)
                           :name (:name args)
@@ -59,7 +59,7 @@
   [args]
   (list
    [:div.form-group
-    [:label {:for (:name args)} (:label args)]
+    [:label.font-weight-bold {:for (:name args)} (:label args)]
     [:textarea.form-control {:id (:id args)
                              :name (:name args)
                              :rows (:rows args)
@@ -74,7 +74,7 @@
   (let [options (:options args)]
     (list
      [:div.form-group
-      [:label {:for (:name args)} (:label args)]
+      [:label.font-weight-bold {:for (:name args)} (:label args)]
       [:select.form-control {:id (:id args)
                              :name (:name args)
                              :required (:required args)
@@ -90,7 +90,7 @@
   (let [options (:options args)]
     (list
      [:div.form-group
-      [:label {:for "#"} (:label args)]
+      [:label.font-weight-bold {:for "#"} (:label args)]
       (map (partial (fn [option]
                       (list
                        [:div.form-check
@@ -99,7 +99,7 @@
                                                   :name (:name args)
                                                   :value (:value option)
                                                   :checked (if (= (:value args) (:value option)) true false)}
-                         [:label {:for (:id option)} (:label option)]]]))) options)])))
+                         [:label.font-weight-bold {:for (:id option)} (:label option)]]]))) options)])))
 
 (defn build-primary-input-button
   "args: type,value"
