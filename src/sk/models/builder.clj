@@ -130,7 +130,7 @@
        ":name \"" field "\"\n"
        ":rows \"3\"\n"
        ":placeholder \"" field " aqui...\"\n"
-       ":required \"false\"\n"
+       ":required false\n"
        ":error \" \"\n"
        ":value (:" field " row)})\n")
       (= tipo "date")
@@ -139,7 +139,7 @@
        ":type \"date\"\n"
        ":id \"" field "\"\n"
        ":name \"" field "\"\n"
-       ":required \"false\"\n"
+       ":required false\n"
        ":error \" \"\n"
        ":value (:" field " row)})\n")
       :else
@@ -149,7 +149,7 @@
        ":id \"" field "\"\n"
        ":name \"" field "\"\n"
        ":placeholder \"" field " aqui...\"\n"
-       ":required \"false\"\n"
+       ":required false\n"
        ":error \" \"\n"
        ":value (:" field " row)})\n"))))
 
