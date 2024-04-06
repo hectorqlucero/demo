@@ -35,6 +35,7 @@
   :aliases {"migrate" ["run" "-m" "sk.migrations/migrate"]
             "rollback" ["run" "-m" "sk.migrations/rollback"]
             "database" ["run" "-m" "sk.models.cdb/database"]
-            "grid" ["run" "-m" "sk.models.builder/build-grid"]}
+            "grid" ["run" "-m" "sk.models.builder/build-grid"]
+            "dashboard" ["run" "-m" "sk.models.builder/build-dashboard"]}
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})
