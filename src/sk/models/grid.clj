@@ -36,19 +36,19 @@
 (defn build-grid
   [title rows table-id fields href]
   (list
-    [:div.table-responsive
-     [:table.table.table-sm {:id table-id
-                             :data-locale "es-MX"
-                             :data-toggle "table"
-                             :data-show-columns "true"
-                             :data-show-toggle "true"
-                             :data-show-print "false"
-                             :data-search "true"
-                             :data-pagination "true"
-                             :data-key-events "true"}
-      [:caption title]
-      (build-grid-head href fields)
-      (build-grid-body rows href fields)]]))
+   [:div.table-responsive
+    [:table.table.table-sm {:id table-id
+                            :data-locale "es-MX"
+                            :data-toggle "table"
+                            :data-show-columns "true"
+                            :data-show-toggle "true"
+                            :data-show-print "false"
+                            :data-search "true"
+                            :data-pagination "true"
+                            :data-key-events "true"}
+     [:caption title]
+     (build-grid-head href fields)
+     (build-grid-body rows href fields)]]))
 ;; End build-grid
 
 ;; start build-dashboard
@@ -76,19 +76,19 @@
 (defn build-dashboard
   [title rows table-id fields]
   (list
-    [:div.table-responsive
-     [:table.table.table-sm {:id table-id
-                             :data-locale "es-MX"
-                             :data-toggle "table"
-                             :data-show-columns "true"
-                             :data-show-toggle "true"
-                             :data-show-print "true"
-                             :data-search "true"
-                             :data-pagination "true"
-                             :data-key-events "true"}
-      [:caption title]
-      (build-dashboard-head fields)
-      (build-dashboard-body rows fields)]]))
+   [:div.table-responsive
+    [:table.table.table-sm {:id table-id
+                            :data-locale "es-MX"
+                            :data-toggle "table"
+                            :data-show-columns "true"
+                            :data-show-toggle "true"
+                            :data-show-print "true"
+                            :data-search "true"
+                            :data-pagination "true"
+                            :data-key-events "true"}
+     [:caption title]
+     (build-dashboard-head fields)
+     (build-dashboard-body rows fields)]]))
 ;; End build-dashboard
 
 ;; Start build-modal

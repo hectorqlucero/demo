@@ -1,5 +1,6 @@
 (ns sk.models.form
-  (:require [ring.util.anti-forgery :refer [anti-forgery-field]]))
+  (:require [ring.util.anti-forgery :refer [anti-forgery-field]]
+            [sk.migrations :refer [config]]))
 
 (defn login-form
   [title href]
@@ -38,6 +39,34 @@
            :id (:id args)
            :name (:name args)
            :value (:value args)}])
+
+(defn build-image-field
+  [row]
+  (list
+   [:input {:id "file"
+            :name "file"
+            :type "file"}]
+   [:div {:style "float:left;margin-right:2px;"}
+    [:img#image1 {:width "95"
+                  :height "71"
+                  :src (str (:path config) (:imagen row))
+                  :onError "this.src='/images/placeholder_profile.png'"
+                  :style "margin-right:wpx;cursor:pointer;"}]]))
+
+(defn build-image-field-script
+  []
+  [:script
+   (str
+    "
+    $('#image1').click(function() {
+      var img = $('#image1');
+      if(img.width() < 500) {
+        img.animate({width: '500', height: '500'}, 1000);
+      } else {
+        img.animate({width: img.attr(\"width\"), height: img.attr(\"height\")}, 1000);
+      }
+    });
+    ")])
 
 (defn build-field
   "args:label,type,id,name,placeholder,required,error,value"
@@ -140,6 +169,7 @@
   (list
    [:div.container.border.bg-light
     [:form {:method "POST"
+            :enctype "multipart/form-data"
             :action href}
      (anti-forgery-field)
      fields
