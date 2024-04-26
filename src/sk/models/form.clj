@@ -191,7 +191,7 @@
                  :id "level"
                  :name "level"
                  :value "U"
-                 :required "true"
+                 :required true
                  :error "El nivel es requerido..."
                  :options [{:value ""
                             :label "Seleccionar nivel..."}
@@ -209,7 +209,7 @@
                    :name "comentarios"
                    :rows "3"
                    :placeholder "Comentarios aqui..."
-                   :required "true"
+                   :required true
                    :error "El comentario es requerido!"
                    :value "El perro loco de Mexicali!"})
   (let [args {:label "Apellido:"
@@ -217,7 +217,7 @@
               :id "lastname"
               :name "lastname"
               :placeholder "Apellido paterno aqui..."
-              :required "true"
+              :required true
               :error "El apellido paterno es requerido"
               :value "Valor de base de datos si aplica"}]
     (build-field args)))
