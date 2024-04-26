@@ -111,7 +111,7 @@
                              :oninput "this.setCustomValidity('')"}
        (map (partial (fn [option]
                        (list
-                        [:option {:value (:option option)
+                        [:option {:value (:value option)
                                   :selected (if (= (:value args) (:option option)) true false)} (:label option)]))) (:options args))]])))
 
 (defn build-radio
@@ -193,13 +193,13 @@
                  :value "U"
                  :required "true"
                  :error "El nivel es requerido..."
-                 :options [{:option ""
+                 :options [{:value ""
                             :label "Seleccionar nivel..."}
-                           {:option "U"
+                           {:value "U"
                             :label "User"}
-                           {:option "A"
+                           {:value "A"
                             :label "Admin"}
-                           {:option "S"
+                           {:value "S"
                             :label "System"}]})
   (build-hidden-field {:id "id"
                        :name "id"
