@@ -112,7 +112,7 @@
        (map (partial (fn [option]
                        (list
                         [:option {:value (:value option)
-                                  :selected (if (= (:value args) (:option option)) true false)} (:label option)]))) (:options args))]])))
+                                  :selected (if (= (:value args) (:value option)) true false)} (:label option)]))) (:options args))]])))
 
 (defn build-radio
   [args]
