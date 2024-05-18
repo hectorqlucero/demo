@@ -4,37 +4,45 @@
 
 ;; start build-gid
 (defn build-grid-head
-  [href fields]
-  (list
-   [:thead
-    [:tr
-     (map (fn [field]
-            (list
-             [:th {:data-sortable "true"
-                   :data-field (key field)} (st/upper-case (val field))]))
+  [href fields & args]
+  (let [args (first args)
+        new (:new args)]
+    (list
+     [:thead
+      [:tr
+       (map (fn [field]
+              (list
+               [:th {:data-sortable "true"
+                     :data-field (key field)} (st/upper-case (val field))]))
 
-          fields)
-     [:th.text-center [:a.btn.btn-primary {:role "button"
-                                           :href (str href "/add")} "Nuevo Record"]]]]))
+            fields)
+       [:th.text-center [:a.btn.btn-primary {:role "button"
+                                             :class (str "btn btn-primary" (when (= new false) " disabled"))
+                                             :href (str href "/add")} "Nuevo Record"]]]])))
 
 (defn build-grid-body
-  [rows href fields]
-  (list
-   [:tbody
-    (map (partial (fn [row]
-                    [:tr
-                     (map (fn [field]
-                            [:td ((key field) row)]) fields)
-                     [:td.text-nowrap.text-center {:style "width:15%;"}
-                      [:a.btn.btn-primary {:role "button"
-                                           :style "margin:1px;"
-                                           :href (str href "/edit/" (:id row))} "Editar"]
-                      [:a.confirm.btn.btn-danger {:role "button"
-                                                  :style "margin:1px;"
-                                                  :href (str href "/delete/" (:id row))} "Borrar"]]])) rows)]))
+  [rows href fields & args]
+  (let [args (first args)
+        edit (:edit args)
+        delete (:delete args)]
+    (list
+     [:tbody
+      (map (partial (fn [row]
+                      [:tr
+                       (map (fn [field]
+                              [:td ((key field) row)]) fields)
+                       [:td.text-nowrap.text-center {:style "width:15%;"}
+                        [:a {:role "button"
+                             :class (str "btn btn-primary" (when (= edit false) " disabled"))
+                             :style "margin:1px;"
+                             :href (str href "/edit/" (:id row))} "Editar"]
+                        [:a {:role "button"
+                             :class (str "confirm btn btn-danger" (when (= delete false) " disabled"))
+                             :style "margin:1px;"
+                             :href (str href "/delete/" (:id row))} "Borrar"]]])) rows)])))
 
 (defn build-grid
-  [title rows table-id fields href]
+  [title rows table-id fields href & args]
   (list
    [:div.table-responsive
     [:table.table.table-sm {:id table-id
@@ -47,8 +55,12 @@
                             :data-pagination "true"
                             :data-key-events "true"}
      [:caption title]
-     (build-grid-head href fields)
-     (build-grid-body rows href fields)]]))
+     (if (seq args)
+       (build-grid-head href fields (first args))
+       (build-grid-head href fields))
+     (if (seq args)
+       (build-grid-body rows href fields (first args))
+       (build-grid-body rows href fields))]]))
 ;; End build-grid
 
 ;; start build-dashboard
