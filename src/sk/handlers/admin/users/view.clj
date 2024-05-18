@@ -82,13 +82,13 @@
                   :required "true"
                   :error "El nivel es un campo requerido..."
                   :value (:level row)
-                  :options [{:option ""
+                  :options [{:value ""
                              :label "Seleccionar nivel..."}
-                            {:option "U"
+                            {:value "U"
                              :label "Usuario"}
-                            {:option "A"
+                            {:value "A"
                              :label "Administrador"}
-                            {:option "S"
+                            {:value "S"
                              :label "Sistema"}]})
    (build-radio {:label "Estado:"
                  :name "active"
