@@ -11,12 +11,7 @@
           (= (user-level) "A")
           (= (user-level) "S"))
      (list
-      [:a.dropdown-item {:href "/admin/constructoras"} "Constructoras"]
-      [:a.dropdown-item {:href "/admin/tipo_creditos"} "Tipo de Creditos"]
-      [:a.dropdown-item {:href "/admin/zonas"} "Zonas"]
-      [:a.dropdown-item {:href "/admin/fraccionamientos"} "Fraccionamientos"]
-      [:a.dropdown-item {:href "/admin/casas"} "Casas"]
-      [:a.dropdown-item {:href "/admin/clientes"} "Clientes"]
+       nil
       (when (= (user-level) "S")
         [:li [:a.dropdown-item {:href "/admin/users"} "Usuarios"]])))))
 
@@ -33,8 +28,7 @@
      [:span.navbar-toggler-icon]]
     [:div#collapsibleNavbar.collapse.navbar-collapse
      [:ul.navbar-nav
-      [:li.nav-item [:a.nav-link {:href "/clientes"} "Clientes"]]
-      [:li.nav-item [:a.nav-link {:href "/clientes_activos"} "Clientes Activos"]]
+      [:li.nav-item [:a.nav-link {:href "/users"} "Dashboard"]]
       (when
        (or
         (= (user-level) "U")
