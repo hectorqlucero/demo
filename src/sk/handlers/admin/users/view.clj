@@ -13,23 +13,12 @@
 (defn users-view
   [title rows]
   (let [table-id "users_table"
-        labels ["apellido paterno"
-                "nombre"
-                "usuario"
-                "fecha de nacimiento"
-                "celular"
-                "nivel"
-                "status"]
-        db-fields [:lastname
-                   :firstname
-                   :username
-                   :dob_formatted
-                   :cell
-                   :level_formatted
-                   :active_formatted]
+        labels ["apellido paterno" "nombre" "usuario" "fecha de nacimiento" "celular" "nivel" "status"]
+        db-fields [:lastname :firstname :username :dob_formatted :cell :level_formatted :active_formatted]
         fields (zipmap db-fields labels)
+        args {:new true :edit true :delete true}
         href "/admin/users"]
-    (build-grid title rows table-id fields href)))
+    (build-grid title rows table-id fields href args)))
 
 ;; Start users-form
 (defn build-users-fields
