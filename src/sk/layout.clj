@@ -11,24 +11,30 @@
           (= (user-level) "A")
           (= (user-level) "S"))
      (list
-      nil
+      [:a.dropdown-item {:href "/admin/constructoras"} "Constructoras"]
+      [:a.dropdown-item {:href "/admin/tipo_creditos"} "Tipo de Creditos"]
+      [:a.dropdown-item {:href "/admin/zonas"} "Zonas"]
+      [:a.dropdown-item {:href "/admin/fraccionamientos"} "Fraccionamientos"]
+      [:a.dropdown-item {:href "/admin/casas"} "Casas"]
+      [:a.dropdown-item {:href "/admin/clientes"} "Clientes"]
       (when (= (user-level) "S")
-        [:a.dropdown-item {:href "/admin/users"} "Usuarios"])))))
+        [:li [:a.dropdown-item {:href "/admin/users"} "Usuarios"]])))))
 
 (defn menus-private []
   (list
-   [:nav.navbar.navbar-expand-md.navbar-light.bg-light.fixed-top
+   [:nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
     [:a.navbar-brand {:href "/"}
      [:img.rounded-circle {:src "/images/logo.png"
                            :alt (:site-name config)
                            :style "width:40px;"}]]
     [:button.navbar-toggler {:type "button"
-                             :data-toggle "collapse"
-                             :data-target "#collapsibleNavbar"}
+                             :data-bs-toggle "collapse"
+                             :data-bs-target "#collapsibleNavbar"}
      [:span.navbar-toggler-icon]]
     [:div#collapsibleNavbar.collapse.navbar-collapse
      [:ul.navbar-nav
-      [:li.nav-item [:a.nav-link {:href "/users"} "Dashboard"]]
+      [:li.nav-item [:a.nav-link {:href "/clientes"} "Clientes"]]
+      [:li.nav-item [:a.nav-link {:href "/clientes_activos"} "Clientes Activos"]]
       (when
        (or
         (= (user-level) "U")
@@ -38,52 +44,57 @@
          [:a.nav-link.dropdown-toggle {:href "#"
                                        :id "navdrop"
                                        :data-toggle "dropdown"} "Administrar"]
-         [:div.dropdown-menu
+         [:ul.dropdown-menu {:aria-labelledby "navdrop"}
           (build-admin)]])
       [:li.nav-item [:a.nav-link {:href "/home/logoff"} (str "Salir [" (user-name) "]")]]]]]))
 
 (defn menus-public []
   (list
-   [:nav.navbar.navbar-expand-md.navbar-light.bg-light.fixed-top
+   [:nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
     [:a.navbar-brand {:href "/"}
      [:img.rounded-circle {:src "/images/logo.png"
                            :alt (:site-name config)
                            :style "width:40px;"}]]
     [:button.navbar-toggler {:type "button"
-                             :data-toggle "collapse"
-                             :data-target "#collapsibleNavbar"}
+                             :data-bs-toggle "collapse"
+                             :data-bs-target "#collapsibleNavbar"
+                             :aria-expanded "false"
+                             :aria-label "Toggle navigation"}
      [:span.navbar-toggler-icon]]
-    [:div#collapsibleNavbar.collapse.navbar-collapse
-     [:ul.navbar-nav
-      [:li.nav-item [:a.nav-link {:href "/home/login"} "Entrar al sitio"]]]]]))
+    [:div#collapsibleNavbar.navbar-collapse
+     [:ul.navbar-nav.me-auto.mb-2.mb-lg-0
+      [:li.nav-item [:a.nav-link {:href "/home/login"
+                                  :aria-current "page"} "Entrar al sitio"]]]]]))
 
 (defn menus-none []
   (list
-   [:nav.navbar.navbar-expand-md.navbar-light.bg-light.fixed-top
+   [:nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
     [:a.navbar-brand {:href "/"}
      [:img.rounded-circle {:src "/images/logo.png"
                            :alt (:site-name config)
                            :style "width:40px;"}]]
     [:button.navbar-toggler {:type "button"
-                             :data-toggle "collapse"
-                             :data-target "#collapsibleNavbar"}
+                             :data-bs-toggle "collapse"
+                             :data-bs-target "#collapsibleNavbar"
+                             :aria-expanded "false"
+                             :aria-label "Toggle navigation"}
      [:span.navbar-toggler-icon]]
     [:div#collapsibleNavbar.collapse.navbar-collapse]]))
 
 (defn app-css []
   (list
-   (include-css "/bootstrap/css/bootstrap.min.css")
-   (include-css "/bootstrap/table/table.css")
-   (include-css "/bootstrap/css/lumen.min.css")
-   (include-css "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")))
+   (include-css "/bootstrap5/css/bootstrap.min.css")
+   (include-css "/bootstrap-icons/font/bootstrap-icons.css")
+   (include-css "/bootstrap-table-master/dist/bootstrap-table.min.css")))
 
 (defn app-js []
   (list
-   (include-js "/js/jquery.js")
-   (include-js "/bootstrap/js/bootstrap.bundle.min.js")
-   (include-js "/bootstrap/table/table.js")
-   (include-js "/bootstrap/table/print/bootstrap-table-print.min.js")
-   (include-js "/bootstrap/table/locale/bootstrap-table-es-MX.min.js")
+   (include-js "/js/jquery.min.js")
+   (include-js "/bootstrap-4.0.0/dist/js/bootstrap.bundle.min.js")
+   (include-js "/bootstrap5/js/bootstrap.bundle.min.js")
+   (include-js "/bootstrap-table-master/dist/bootstrap-table.min.js")
+   (include-js "/bootstrap-table-master/dist/extensions/print/bootstrap-table-print.min.js")
+   (include-js "/bootstrap-table-master/dist/locale/bootstrap-table-es-MX.min.js")
    (include-js "/js/extra.js")))
 
 (defn application [title ok js & content]
