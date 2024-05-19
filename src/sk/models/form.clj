@@ -150,13 +150,16 @@
                          :href (:href (:href args))} (:label args)])
 
 (defn build-modal-buttons
-  []
-  (list
-   [:input.btn.btn-primary {:type "submit"
-                            :style "padding:5px;margin:5px;"
-                            :value "Processar"}]
-   [:button.btn.btn-secondary {:type "button"
-                               :data-dismiss "modal"} "Cancelar"]))
+  [& args]
+  (let [args (first args)
+        view (:view args)]
+    (list
+      (when-not (= view true)
+        [:input.btn.btn-primary {:type "submit"
+                                 :style "padding:5px;margin:5px;"
+                                 :value "Processar"}])
+      [:button.btn.btn-secondary {:type "button"
+                                  :data-dismiss "modal"} "Cancelar"])))
 (defn form
   [href fields buttons]
   (list
