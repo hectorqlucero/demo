@@ -31,39 +31,34 @@
                  :type "text"
                  :id "lastname"
                  :name "lastname"
-                 :required "true"
-                 :error "El apellido paterno es un campo requerido..."
+                 :required true
                  :placeholder "Apellido paterno aqui..."
                  :value (:lastname row)})
    (build-field {:label "Nombre:"
                  :type "text"
                  :id "firstname"
                  :name "firstname"
-                 :required "true"
-                 :error "El nombre es un campo requrerido..."
+                 :required true
                  :placeholder "El nombre aqui..."
                  :value (:firstname row)})
    (build-field {:label "Usuario:"
                  :type "email"
                  :id "username"
                  :name "username"
-                 :required "true"
-                 :error "El usuario es un campo requerido..."
+                 :required true
                  :placeholder "El email del usuario aqui..."
                  :value (:username row)})
    (build-field {:label "Fecha de nacimiento:"
                  :type "date"
                  :id "dob"
                  :name "dob"
-                 :required "false"
-                 :error nil
+                 :required false
                  :value (:dob row)})
    (build-field {:label "Celular:"
                  :type "text"
                  :id "cell"
                  :name "cell"
-                 :required "false"
-                 :error nil
+                 :required false
                  :value (:cell row)})
    (build-select {:label "Nivel de Usuario:"
                   :id "level"
