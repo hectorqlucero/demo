@@ -131,7 +131,6 @@
        ":rows \"3\"\n"
        ":placeholder \"" field " aqui...\"\n"
        ":required false\n"
-       ":error \" \"\n"
        ":value (:" field " row)})\n")
       (= tipo "date")
       (str
@@ -140,7 +139,6 @@
        ":id \"" field "\"\n"
        ":name \"" field "\"\n"
        ":required false\n"
-       ":error \" \"\n"
        ":value (:" field " row)})\n")
       :else
       (str
@@ -150,7 +148,6 @@
        ":name \"" field "\"\n"
        ":placeholder \"" field " aqui...\"\n"
        ":required false\n"
-       ":error \" \"\n"
        ":value (:" field " row)})\n"))))
 
 (defn build-grid-view
