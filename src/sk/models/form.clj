@@ -74,14 +74,7 @@
   (list
    [:div.form-group
     [:label.font-weight-bold {:for (:name args)} (:label args)]
-    [:input.form-control {:type (:type args)
-                          :id (:id args)
-                          :name (:name args)
-                          :placeholder (:placeholder args)
-                          :required (:required args)
-                          :oninvalid (str "this.setCustomValidity('" (:error args) "')")
-                          :oninput "this.setCustomValidity('')"
-                          :value (:value args)}]]))
+    [:input.form-control args]]))
 
 (defn build-textarea
   "args:label,id,name,placeholder,required,error,value"
@@ -212,12 +205,80 @@
                    :required true
                    :error "El comentario es requerido!"
                    :value "El perro loco de Mexicali!"})
-  (let [args {:label "Apellido:"
-              :type "text"
-              :id "lastname"
-              :name "lastname"
-              :placeholder "Apellido paterno aqui..."
-              :required true
-              :error "El apellido paterno es requerido"
-              :value "Valor de base de datos si aplica"}]
-    (build-field args)))
+  (build-field {:label "Nombre" ;; text field example
+                :type "text"
+                :id "nombre"
+                :name "nombre"
+                :placeholder "El nombre aqui..."
+                :required false
+                :value (:nombre row)})
+  (build-field {:label "Email" ;; email field example
+                :type "email"
+                :id "correo_electronico"
+                :name "correo_electronico"
+                :placeholder "El correo electronico aqui!"
+                :required false
+                :value (:correo_electronico row)})
+  (build-field {:label "Buscar contacto"
+                :type "search"
+                :id "buscar_contacto"
+                :name "buscar_contacto"
+                :placeholder "Busqueda aqui!"
+                :required false
+                :value (:buscar_contacto row)})
+  (build-field {:label "Celular" ;; phone field example
+                :type "tel"
+                :id "celular"
+                :name "celular"
+                :placeholder "Celular aqui!"
+                :required false
+                :value (:celular row)})
+  (build-field {:label "URL" ;; url field exampl
+                :type "url"
+                :id "url_pagina"
+                :name "url_pagina"
+                :placeholder "url de pagina aqui!"
+                :required false
+                :value (:url_pagina row)})
+  (build-field {:label "Edad" ;; number field example
+                :type "number"
+                :id "edad"
+                :name "edad"
+                :min "1"
+                :max "120"
+                :step "1"
+                :placeholder "Edad aqui!"
+                :required false
+                :value (:edad row)})
+  (build-field {:label "Fecha de Nacimiento" ;; date field example
+                :type "date"
+                :id "nacimiento"
+                :name "nacimiento"
+                :required false
+                :value (:nacimiento row)})
+  (build-field {:label "Cuando estaras disponible este verano?" ;; date with controls- does not work on all browsers
+                :type "date"
+                :id "disponible_fecha"
+                :name "disponible_fecha"
+                :min "2024-06-01"
+                :max "2024-08-31"
+                :step "7"
+                :balue (:disponible_fecha row)})
+  (build-field {:label "Mes" ;; month field example - does not work on all browsers
+                :type "month"
+                :id "mes"
+                :name "mes"
+                :required false
+                :value (:mes row)})
+  (build-field {:label "Semana" ;; week field example - does not work on all browsers
+                :type "week"
+                :id "semana"
+                :name "semana"
+                :required false
+                :value (:semana row)})
+  (build-field {:label "Escoja un color" ;; color field example
+                :type "color"
+                :id "color"
+                :name "color"
+                :required false
+                :value (:color row)}))
