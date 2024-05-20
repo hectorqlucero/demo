@@ -2,10 +2,34 @@
   (:require [ring.util.anti-forgery :refer [anti-forgery-field]]
             [sk.migrations :refer [config]]))
 
+(defn password-form
+  [title]
+  (list
+   [:div.container.border.w-25.bg-light
+    [:legend title]
+    [:form {:method "POST"
+            :action "/change/password"}
+     (anti-forgery-field)
+     [:div.form-group
+      [:label.fw-bold {:for "email"} "Email:"]
+      [:input.form-control {:id "email"
+                            :name "email"
+                            :type "email"
+                            :placeholder "Tu email aqui..."}]]
+     [:div.form-group
+      [:label.fw-bold {:for "password"} "Contraseña Nueva:"]
+      [:input.form-control {:id "password"
+                            :name "password"
+                            :type "password"
+                            :style "margin-bottom:5px;"
+                            :placeholder "Tu contraseña aqui..."}]]
+     [:input.btn.btn-primary {:type "submit"
+                              :value "Cambiar Contraseña"}]]]))
+
 (defn login-form
   [title href]
   (list
-   [:div.container.border.w-25.bg-light
+   [:div.container.border.w-50.bg-light
     [:legend title]
     [:form {:method "POST"
             :action href}
@@ -22,6 +46,7 @@
      [:div.form-group
       [:label.font-weight-bold {:for "password"} "Contraseña:"]
       [:input.form-control {:id "password"
+                            :style "margin-bottom:5px;"
                             :name "password"
                             :required "true"
                             :oninvalid "this.setCustomValidity('La contraseña es requerida...')"
@@ -30,7 +55,9 @@
                             :type "Password"}]]
      [:input.btn.btn-primary {:type "submit"
                               :value "Ingresar al sitio"
-                              :style "margin:2px;"}]]]))
+                              :style "margin-right:2px;"}]
+     [:a.btn.btn-secondary {:role "button"
+                            :href "/change/password"} "Cambiar Contraseña"]]]))
 ;; Start form
 (defn build-hidden-field
   "args:type,id,name,value"
@@ -154,12 +181,12 @@
   (let [args (first args)
         view (:view args)]
     (list
-      (when-not (= view true)
-        [:input.btn.btn-primary {:type "submit"
-                                 :style "padding:5px;margin:5px;"
-                                 :value "Processar"}])
-      [:button.btn.btn-secondary {:type "button"
-                                  :data-dismiss "modal"} "Cancelar"])))
+     (when-not (= view true)
+       [:input.btn.btn-primary {:type "submit"
+                                :style "padding:5px;margin:5px;"
+                                :value "Processar"}])
+     [:button.btn.btn-secondary {:type "button"
+                                 :data-dismiss "modal"} "Cancelar"])))
 (defn form
   [href fields buttons]
   (list
