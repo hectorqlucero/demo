@@ -124,7 +124,7 @@
     (list
      [:div.form-group
       [:label.font-weight-bold {:for (:name args)} (:label args)]
-      [:select.form-control {:id (:id args)
+      [:select.form-control.form-select {:id (:id args)
                              :name (:name args)
                              :required (:required args)
                              :oninvalid (str "this.setCustomValidity('" (:error args) "')")
