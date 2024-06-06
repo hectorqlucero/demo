@@ -8,7 +8,7 @@
   (let [args (first args)
         new (:new args)]
     (list
-     [:thead
+     [:thead.table-light
       [:tr
        (map (fn [field]
               (list
@@ -67,7 +67,7 @@
 (defn build-dashboard-head
   [fields]
   (list
-   [:thead
+   [:thead.table-light
     [:tr
      (map (fn [field]
             (list
