@@ -116,10 +116,9 @@
      [:div.modal-content
       [:div.modal-header
        [:h5.modal-title {:id "myModalTitle"} title]
-       [:button.close {:type "button"
+       [:button.btn-close {:type "button"
                        :data-dismiss "modal"
-                       :aria-label "Close"}
-        [:span {:aria-hidden "true"} "&times;"]]]
+                       :aria-label "Close"}]]
       [:div.modal-body
        [:span form]]]]]))
 
