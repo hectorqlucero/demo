@@ -107,25 +107,30 @@
 (defn build-modal
   [title row form]
   (list
-   [:div.modal.fade {:id "myModal"
+   [:div.modal.fade {:id "exampleModal"
                      :tabindex "-1"
-                     :role "dialog"
-                     :aria-labelledby "myModatlTitle"
+                     :aria-labelledby "exampleModalLabel"
                      :aria-hidden "true"}
-    [:div.modal-dialog {:role "document"}
+    [:div.modal-dialog
      [:div.modal-content
       [:div.modal-header
-       [:h5.modal-title {:id "myModalTitle"} title]
+       [:h1.modal-title.fs-5 {:id "exampleModalLabel"} title]
        [:button.btn-close {:type "button"
-                       :data-dismiss "modal"
-                       :aria-label "Close"}]]
+                           :data-bs-dismiss "modal"
+                           :aria-label "Close"}]]
+
       [:div.modal-body
        [:span form]]]]]))
+;; End build-modal
 
 (defn modal-script
   []
   [:script
    "
-   $('#myModal').modal('show');
+   const myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+    keyboard: false
+   })
+
+   myModal.show();
    "])
 ;; End build-modal

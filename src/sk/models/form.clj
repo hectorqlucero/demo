@@ -186,7 +186,7 @@
                                 :style "padding:5px;margin:5px;"
                                 :value "Processar"}])
      [:button.btn.btn-secondary {:type "button"
-                                 :data-dismiss "modal"} "Cancelar"])))
+                                 :data-bs-dismiss "modal"} "Cancelar"])))
 (defn form
   [href fields buttons]
   (list

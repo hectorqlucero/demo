@@ -37,7 +37,7 @@
         [:li.nav-item.dropdown
          [:a.nav-link.dropdown-toggle {:href "#"
                                        :id "navdrop"
-                                       :data-toggle "dropdown"} "Administrar"]
+                                       :data-bs-toggle "dropdown"} "Administrar"]
          [:ul.dropdown-menu {:aria-labelledby "navdrop"}
           (build-admin)]])
       [:li.nav-item [:a.nav-link {:href "/home/logoff"} (str "Salir [" (user-name) "]")]]]]]))
@@ -84,7 +84,6 @@
 (defn app-js []
   (list
    (include-js "/js/jquery.min.js")
-   (include-js "/bootstrap-4.0.0/dist/js/bootstrap.bundle.min.js")
    (include-js "/bootstrap5/js/bootstrap.bundle.min.js")
    (include-js "/bootstrap-table-master/dist/bootstrap-table.min.js")
    (include-js "/bootstrap-table-master/dist/extensions/print/bootstrap-table-print.min.js")
