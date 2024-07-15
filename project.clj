@@ -38,4 +38,6 @@
             "grid" ["run" "-m" "sk.models.builder/build-grid"]
             "dashboard" ["run" "-m" "sk.models.builder/build-dashboard"]}
   :profiles {:uberjar {:aot :all
-                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})
+                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}
+             :dev {:source-paths ["src" "dev"]
+                   :main sk.dev}})
