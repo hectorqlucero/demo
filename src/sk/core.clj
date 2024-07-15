@@ -58,7 +58,7 @@
 
 (defn -main
   []
-  (jetty/run-jetty #'app {:port (:port config)}))
+  (jetty/run-jetty app {:port (:port config)}))
 
 (comment
   (:port config))
