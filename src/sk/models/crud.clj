@@ -213,9 +213,10 @@
     image-name))
 
 (defn get-id [id postvars table]
-  (if (nil? id)
-    (let [result (Save db (keyword table) postvars ["id = ?" id])]
-      (str (:generated_key (first result))))
+  (if (= id 0)
+    (-> (Save db (keyword table) postvars ["id = ?" id])
+        first
+        :generated_key)
     id))
 
 (defn process-upload-form
