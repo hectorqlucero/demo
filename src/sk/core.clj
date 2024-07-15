@@ -6,7 +6,6 @@
             [ring.adapter.jetty :as jetty]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [ring.middleware.multipart-params :refer [wrap-multipart-params]]
-            [ring.middleware.reload :as reload]
             [ring.middleware.session :refer [wrap-session]]
             [ring.middleware.session.cookie :refer [cookie-store]]
             [sk.migrations :refer [config]]
