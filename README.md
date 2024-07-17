@@ -154,8 +154,13 @@ Cambiar: :uberjar-name "demo.jar" a :uberjar-name "contactos.jar"
 `Renombrar resources/private/config_example.clj a config.clj`
 
 ```
+Supongamos la contraseña de mi base de datos es: secreto
 Cambiar :db-name "//localhost:3306/contactos?characterEncoding=UTF-8&serverTimezone=America/Los_Angeles"
-Cambiar :database-url "mysql://localhost:3306/contactos?user=root&password=* *tu contraseña* *&serverTimezone=America/Los_Angeles
+Cambiar :database-url "mysql://localhost:3306/contactos?user=root&password=secreto&serverTimezone=America/Los_Angeles
+Cambiar :db-pwd: "secreto"
+Cambiar :site-name "Contactos"
+Cambiar :company-name "Mi compañia"
+Cambiar :uploads "./uploads/contactos/"
 
 ;; Replace all "xxxxx" with your configuration
 {:db-protocol  "mysql"
