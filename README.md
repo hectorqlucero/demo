@@ -45,8 +45,11 @@ Una libreria que genera una pagina web full stack
 
 ## Ejemplo
 `git clone https://github.com/hectorqlucero/demo.git`
+
 `mv demo contactos`
+
 `cd contactos`
+
 `rm -rf .git`
 
 $ ./tree-md .
