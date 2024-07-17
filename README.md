@@ -26,7 +26,7 @@ Una libreria que genera una pagina web full stack
     2. **lein database** - Esto creara tres usuarios temporaios.
         1. **Usuario**: user@gmail.com    **contraseña**: user
         2. **Usuario**: admin@gmail.com   **contraseña**: admin
-        3. **Usuario**: sistema@gmail.com **contraseña**
+        3. **Usuario**: sistema@gmail.com **contraseña**: sistema
 
 ## Usarlo cuando esta instalado
 **En el browser de tu gusto**: http://localhost:3000 para correr la pagina
