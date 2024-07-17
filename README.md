@@ -9,8 +9,8 @@ Una libreria que genera una pagina web full stack
 5. Si usas vim puedes bajar la configuracion para clojure.
     1. Dotfiles para vim aqui: https://githubcom/hectorqlucero/vim
     1. Necesitas instalar **vifm**
-    2. cpp compila la funcion donde este el cursor.
-        3. \\\\ invoka a vifm para re-emplazar Explore en vim.
+        2. cpp compila la funcion donde este el cursor.
+        3. invoka a vifm para re-emplazar Explore en vim.
 6. Recomiendo dbeaver-ce para administrar la base de datos.
     1. Lo puedes bajar aqui: https://dbeaver.io
 
