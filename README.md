@@ -43,7 +43,7 @@ Una libreria que genera una pagina web full stack
 5. **lein dashboard 'nombre de la tabla'**: Crear un 'dashboard' para una tabla ejemplo: **lein dashboard contactos** Nota: la tabla debe de existir en la base de datos.
 
 
-## Ejemplo
+## Ejemplo - Crear una pagina de contactos
 `git clone https://github.com/hectorqlucero/demo.git`
 
 `mv demo contactos`
@@ -99,6 +99,8 @@ $ ./tree-md .
      * [layout.clj](./src/sk/layout.clj)
      * [migrations.clj](./src/sk/migrations.clj)
  * [test](./test)
+
+# Crear una base de datos en tu cliente de MySQL **contactos**
 
 ## License
 
