@@ -7,12 +7,12 @@ Una libreria que genera una pagina web full stack
 3. Leiningen instalado. https://leiningen.org
 4. Tu editor de preferencia que este configurado para codificar en clojure.
 5. Si usas vim puedes bajar la configuracion para clojure.
-  1. Dotfiles para vim aqui: https://githubcom/hectorqlucero/vim
-    1. Necesitas instalar **vifm**
-    2. cpp compila la funcion donde este el cursor.
-    3. \\ invoka a vifm para re-emplazar Explore en vim.
+..1. Dotfiles para vim aqui: https://githubcom/hectorqlucero/vim
+....1. Necesitas instalar **vifm**
+....2. cpp compila la funcion donde este el cursor.
+....3. \\ invoka a vifm para re-emplazar Explore en vim.
 6. Recomiendo dbeaver-ce para administrar la base de datos.
-  1. Lo puedes bajar aqui: https://dbeaver.io
+..1. Lo puedes bajar aqui: https://dbeaver.io
 
 ## Instalación
 1. En una terminal: git clone https://github.com/hectorqlucero/demo.git
@@ -24,11 +24,11 @@ Una libreria que genera una pagina web full stack
 7. En el folder donde esta el codigo abrir una terminal y ejecutar: **lein run**
 8. Abrir otra terminal en el folder donde esta el codigo y ejecutar: **lein repl**
 9. Abrir otra terminal en el folder donde esta el codigo y ejecutar:
-  1. **lein migrate** - Esto creara la tabla de **users**, lo puedes verificar en dbeaver.
-  2. **lein database** - Esto creara tres usuarios temporaios.
-    1. **Usuario**: user@gmail.com    **contraseña**: user
-    2. **Usuario**: admin@gmail.com   **contraseña**: admin
-    3. **Usuario**: sistema@gmail.com **contraseña**
+..1. **lein migrate** - Esto creara la tabla de **users**, lo puedes verificar en dbeaver.
+..2. **lein database** - Esto creara tres usuarios temporaios.
+....1. **Usuario**: user@gmail.com    **contraseña**: user
+....2. **Usuario**: admin@gmail.com   **contraseña**: admin
+....3. **Usuario**: sistema@gmail.com **contraseña**
 
 ## Usarlo cuando esta instalado
 **En el browser de tu gusto**: http://localhost:3000 para correr la pagina
@@ -38,10 +38,10 @@ Una libreria que genera una pagina web full stack
 2. **lein database**: Crear usuarios temporarios
 3. **lein rollback**: Regresar una migracion a la anterior.
 4. **lein grid 'nombre de la tabla'**: Crear crud para una tabla ejemplo: **lein grid contactos** Nota: la tabla debe de existir en la base de datos.
-  1. Crea un **data grid** con todas las funciones crud para una tabla.
-    1. Crear un nuevo record
-    2. Editar un record existente
-    3. Borrar un record existente
+..1. Crea un **data grid** con todas las funciones crud para una tabla.
+....1. Crear un nuevo record
+....2. Editar un record existente
+....3. Borrar un record existente
 5. **lein dashboard 'nombre de la tabla'**: Crear un 'dashboard' para una tabla ejemplo: **lein dashboard contactos** Nota: la tabla debe de existir en la base de datos.
 
 
