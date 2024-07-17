@@ -101,8 +101,12 @@ $ ./tree-md .
  * [test](./test)
 
 `Crear una base de datos en tu cliente de MySQL **contactos**`
+
 `Modificar defproject.clj aqui abajo`
 ```
+Cambiar: **description** "Demo" a **description** "Contactos"
+Cambiar: **uberjar-name** "demo.jar" a **uberjar-name** "contactos.jar"
+
 (defproject sk "0.1.0"
   :description "Demo" ; Change me
   :url "http://example.com/FIXME" ; Change me
