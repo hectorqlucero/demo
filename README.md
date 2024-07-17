@@ -77,7 +77,7 @@ $ ./tree-md .
  * [src](./src)
    * [sk](./src/sk)
      * [handlers](./src/sk/handlers)
-       * [admin[(./src/sk/handlers/admin)
+       * [admin](./src/sk/handlers/admin)
          * [users](./src/sk/handlers/admin/users)
            * [controller.clj](./src/sk/handlers/admin/users/controller.clj)
            * [model.clj](./src/sk/handlers/admin/users/model.clj)
