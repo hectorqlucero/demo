@@ -44,6 +44,21 @@ Una libreria que genera una pagina web full stack
 
 
 ## Ejemplo
+`git clone https://github.com/hectorqlucero/demo.git`
+`mv demo contactos`
+`cd contactos`
+`rm -rf .git`
+
+$ ./tree-md .
+# Arbol del proyecto
+
+.
+ * [CHANGELOG.md](/.CHANGELOG.md)
+ * [dev](./dev)
+   * [sk](./dev/sk)
+     * [dev.clj](./dev/sk/dev.clj)
+ * [doc](./doc)
+
 
 ## License
 
