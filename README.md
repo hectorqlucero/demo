@@ -7,12 +7,12 @@ Una libreria que genera una pagina web full stack
 3. Leiningen instalado. https://leiningen.org
 4. Tu editor de preferencia que este configurado para codificar en clojure.
 5. Si usas vim puedes bajar la configuracion para clojure.
-..1. Dotfiles para vim aqui: https://githubcom/hectorqlucero/vim
-....1. Necesitas instalar **vifm**
-....2. cpp compila la funcion donde este el cursor.
-....3. \\ invoka a vifm para re-emplazar Explore en vim.
+    1. Dotfiles para vim aqui: https://githubcom/hectorqlucero/vim
+    1. Necesitas instalar **vifm**
+    2. cpp compila la funcion donde este el cursor.
+        3. \\ invoka a vifm para re-emplazar Explore en vim.
 6. Recomiendo dbeaver-ce para administrar la base de datos.
-..1. Lo puedes bajar aqui: https://dbeaver.io
+    1. Lo puedes bajar aqui: https://dbeaver.io
 
 ## Instalación
 1. En una terminal: git clone https://github.com/hectorqlucero/demo.git
