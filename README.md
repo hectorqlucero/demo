@@ -95,7 +95,7 @@ $ ./tree-md .
      * [core.clj](./src/sk/core.clj)
      * [layout.clj](./src/sk/layout.clj)
      * [migrations.clj](./src/sk/migrations.clj)
-     * [test](./test)
+ * [test](./test)
 
 ## License
 
