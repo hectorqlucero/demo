@@ -104,8 +104,8 @@ $ ./tree-md .
 
 `Modificar defproject.clj aqui abajo`
 ```
-Cambiar: **description** "Demo" a **description** "Contactos"
-Cambiar: **uberjar-name** "demo.jar" a **uberjar-name** "contactos.jar"
+Cambiar: :description "Demo" a :description "Contactos"
+Cambiar: :uberjar-name "demo.jar" a :uberjar-name "contactos.jar"
 
 (defproject sk "0.1.0"
   :description "Demo" ; Change me
@@ -151,7 +151,7 @@ Cambiar: **uberjar-name** "demo.jar" a **uberjar-name** "contactos.jar"
              :dev {:source-paths ["src" "dev"]
                    :main sk.dev}})
 ```
-
+`Renombrar resources/private/config_example.clj a config.clj
 ## License
 
 Copyright © 2024 FIXME
