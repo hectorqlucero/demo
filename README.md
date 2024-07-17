@@ -31,15 +31,15 @@ Una libreria que genera una pagina web full stack
 ## Usarlo cuando esta instalado
 **En el browser de tu gusto**: http://localhost:3000 para correr la pagina
 
-## Options
+## Opciones
 1. **lein migrate**: Crear una migracion a la base de datos
 2. **lein database**: Crear usuarios temporarios
 3. **lein rollback**: Regresar una migracion a la anterior.
 4. **lein grid 'nombre de la tabla'**: Crear crud para una tabla ejemplo: **lein grid contactos** Nota: la tabla debe de existir en la base de datos.
     1. Crea un **data grid** con todas las funciones crud para una tabla.
-    1. Crear un nuevo record
-    2. Editar un record existente
-    3. Borrar un record existente
+        1. Crear un nuevo record
+        2. Editar un record existente
+        3. Borrar un record existente
 5. **lein dashboard 'nombre de la tabla'**: Crear un 'dashboard' para una tabla ejemplo: **lein dashboard contactos** Nota: la tabla debe de existir en la base de datos.
 
 
