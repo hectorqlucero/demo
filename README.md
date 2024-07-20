@@ -206,12 +206,12 @@ Si haces clic en **Salir [System User]** te sacara de la pagina y tu sesion se d
 La pagina esta lista ahora para agregarle nuestro sistema de contactos...
 
 ## Ahora hay que crear nuestar pagina de contactos
-###Crear una migracion para crear la tabla de contactos en la base de datos
-En resources/migrations crear resources/migrations/**002-contactos.down.sql**
-Contenido de **002-contactos.down.sql** `drop table contactos;`
+Crear en resources/migrations/ -> resources/migrations/002-contactos.down.sql con el contenido:
+```
+drop table contactos;
+```
 
-En resources/migrations Crear resources/migrations/**02-contactos.up.sql**
-Contenido de **02-contactos.up.sql**:
+Crear en resources/migrations/ - resources/migrations/002-contactos.up.sql con el contenido:
 ```
 create table contactos (
   id int unsigned not null auto_increment primary key,
