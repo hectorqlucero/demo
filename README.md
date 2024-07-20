@@ -52,6 +52,8 @@ Una libreria que genera una pagina web full stack
 
 `rm -rf .git`
 
+`git init`
+
 $ ./tree-md .
 # Arbol del proyecto
 
