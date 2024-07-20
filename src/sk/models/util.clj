@@ -27,3 +27,18 @@
                    nil
                    (:name (first (Query db ["select CONCAT(firstname,' ',lastname) as name from users where id = ?" id]))))]
     username))
+
+(defn seconds->string [seconds]
+  (let [n seconds
+        day (int (/ n (* 24 3600)))
+
+        n (mod n (* 24 3600))
+        hour (int (/ n 3600))
+
+        n (mod n 3600)
+        minutes (int (/ n 60))
+
+        n (mod n 60)
+        seconds (int n)]
+    (str day " days " hour " hours " minutes " minutes ")))
+
