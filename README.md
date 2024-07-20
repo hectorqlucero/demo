@@ -227,6 +227,166 @@ Ir a la terminal donde hiciste la primara migracion si esta habierta o habrir un
         1. `controller.clj`
         2. `model.clj`
         3. `view.clj`
+**Paginas generadas**:
+Formatear la pagina src/sk/handlers/admin/contactos/**controller.clj**, la pagina se vera asi:
+```
+(ns sk.handlers.admin.contactos.controller
+  (:require [sk.layout :refer [application error-404]]
+            [sk.models.util :refer [get-session-id user-level]]
+            [sk.models.crud :refer [build-form-save build-form-delete]]
+            [sk.handlers.admin.contactos.model :refer [get-contactos get-contactos-id]]
+            [sk.handlers.admin.contactos.view :refer [contactos-view contactos-edit-view contactos-add-view contactos-modal-script]]))
+
+(defn contactos [_]
+  (let [title "Contactos"
+        ok (get-session-id)
+        js nil
+        rows (get-contactos)
+        content (contactos-view title rows)]
+    (if
+     (or
+      (= (user-level) "A")
+      (= (user-level) "S"))
+      (application title ok js content)
+      (application title ok nil "Only <strong>los administrators </strong> can access this option!!!"))))
+
+(defn contactos-edit
+  [id]
+  (let [title "Modificar contactos"
+        ok (get-session-id)
+        js (contactos-modal-script)
+        row (get-contactos-id  id)
+        rows (get-contactos)
+        content (contactos-edit-view title row rows)]
+    (application title ok js content)))
+
+(defn contactos-save
+  [{params :params}]
+  (let [table "contactos"
+        result (build-form-save params table)]
+    (if (= result true)
+      (error-404 "Record se processo correctamente!" "/admin/contactos")
+      (error-404 "No se pudo procesar el record!" "/admin/contactos"))))
+
+(defn contactos-add
+  [_]
+  (let [title "Crear nuevo contactos"
+        ok (get-session-id)
+        js (contactos-modal-script)
+        row nil
+        rows (get-contactos)
+        content (contactos-add-view title row rows)]
+    (application title ok js content)))
+
+(defn contactos-delete
+  [id]
+  (let [table "contactos"
+        result (build-form-delete table id)]
+    (if (= result true)
+      (error-404 "Record se processo correctamente!" "/admin/contactos")
+      (error-404 "No se pudo procesar el record!" "/admin/contactos"))))
+```
+Formatear la pagina src/sk/handlers/admin/contactos/**model.clj**, la pagina se vera asi:
+```
+(ns sk.handlers.admin.contactos.model
+  (:require [sk.models.crud :refer [Query db]]
+            [clojure.string :as st]))
+
+(def get-contactos-sql
+  (str
+   "
+SELECT *
+FROM contactos
+"))
+
+(defn get-contactos
+  []
+  (Query db get-contactos-sql))
+
+(def get-contactos-id-sql
+  (str
+   "
+SELECT *
+FROM contactos
+WHERE id = ?
+"))
+
+(defn get-contactos-id
+  [id]
+  (first (Query db [get-contactos-id-sql id])))
+```
+Formatear la pagina src/sk/handlers/admin/contactos/**view.clj**, la pagina se vera asi:
+```
+(ns sk.handlers.admin.contactos.view
+  (:require [ring.util.anti-forgery :refer [anti-forgery-field]]
+            [sk.models.form :refer [form build-hidden-field build-field build-select build-radio build-modal-buttons build-textarea]]
+            [sk.models.grid :refer [build-grid build-modal modal-script]]))
+
+(defn contactos-view
+  [title rows]
+  (let [labels ["NOMBRE" "PATERNO" "MATERNO"]
+        db-fields [:nombre :paterno :materno]
+        fields (zipmap db-fields labels)
+        table-id "contactos_table"
+        args {:new true :edit true :delete true}
+        href "/admin/contactos"]
+    (build-grid title rows table-id fields href args)))
+
+(defn build-contactos-fields
+  [row]
+  (list
+   (build-hidden-field {:id "id"
+                        :name "id"
+                        :value (:id row)})
+   (build-field {:label "NOMBRE"
+                 :type "text"
+                 :id "nombre"
+                 :name "nombre"
+                 :placeholder "nombre aqui..."
+                 :required false
+                 :value (:nombre row)})
+   (build-field {:label "PATERNO"
+                 :type "text"
+                 :id "paterno"
+                 :name "paterno"
+                 :placeholder "paterno aqui..."
+                 :required false
+                 :value (:paterno row)})
+   (build-field {:label "MATERNO"
+                 :type "text"
+                 :id "materno"
+                 :name "materno"
+                 :placeholder "materno aqui..."
+                 :required false
+                 :value (:materno row)})))
+
+(defn build-contactos-form
+  [title row]
+  (let [fields (build-contactos-fields row)
+        href "/admin/contactos/save"
+        buttons (build-modal-buttons)]
+    (form href fields buttons)))
+
+(defn build-contactos-modal
+  [title row]
+  (build-modal title row (build-contactos-form title row)))
+
+(defn contactos-edit-view
+  [title row rows]
+  (list
+   (contactos-view "contactos Manteniento" rows)
+   (build-contactos-modal title row)))
+
+(defn contactos-add-view
+  [title row rows]
+  (list
+   (contactos-view "contactos Mantenimiento" rows)
+   (build-contactos-modal title row)))
+
+(defn contactos-modal-script
+  []
+  (modal-script))
+```
 
 ## License
 
