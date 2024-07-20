@@ -31,14 +31,23 @@
 (defn seconds->string [seconds]
   (let [n seconds
         day (int (/ n (* 24 3600)))
+        day-desc (if (= day 1) " day " " days ")
 
         n (mod n (* 24 3600))
         hour (int (/ n 3600))
+        hour-desc (if (= hour 1) " hour " " hours ")
 
         n (mod n 3600)
         minutes (int (/ n 60))
+        minutes-desc (if (= minutes 1) " minute " " minutes ")
 
         n (mod n 60)
-        seconds (int n)]
-    (str day " days " hour " hours " minutes " minutes ")))
+        seconds (int n)
+        seconds-desc (if (= seconds 1) " second " " seconds ")
 
+        minutes-desc (str day day-desc hour hour-desc minutes minutes-desc)
+        seconds-desc (str day day-desc hour hour-desc minutes minutes-desc seconds seconds-desc)]
+    minutes-desc))
+
+(comment
+  (seconds->string 90061))
