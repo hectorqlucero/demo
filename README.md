@@ -183,6 +183,51 @@ Cambiar :uploads "./uploads/contactos/"
  :img-url      "https://0.0.0.0/uploads/"
  :path         "/uploads/"}
 ```
+
+`Abrir una terminal en folder del proyecto, Ejecutar: lein with-profile dev run`
+
+`Abrir otra terminal en el folder del proyecto, Ejecutar: lein repl`
+
+`Abrir otra terminal en el folder del proyecto, Ejecutar: lein migrate y despues alli mismo lein database`
+
+## Ejecutar la pagina
+http://localhost:3000
+Cuando corra la pagina sin errores:
+1. clic **Entrar al sitio**
+2. En el campo Email:  **sistema@gmail.com**
+3. En el campo Contraseña: **sistema**
+4. Hacer clic en el boton Ingresar al sitio
+    1. La pagina tiene un menu bootstrap5 con un Logo, Dashboard, Administrar y Salir [System User]
+
+Si haces clic en Dashboard desplegara un reporte de usuarios.
+Si haces clic en Administrar veras un menu con una opcion **Usuarios**, Si haces clic en **Usuarios**, veras un data crud grid para mantenimiento de usuarios.
+Si haces clic en **Salir [System User]** te sacara de la pagina y tu sesion se destruira.
+
+La pagina esta lista ahora para agregarle nuestro sistema de contactos...
+
+## Ahora hay que crear nuestar pagina de contactos
+###Crear una migracion para crear la tabla de contactos en la base de datos
+En resources/migrations crear resources/migrations/**002-contactos.down.sql**
+Contenido de **002-contactos.down.sql** `drop table contactos;`
+
+En resources/migrations Crear resources/migrations/**02-contactos.up.sql**
+Contenido de **02-contactos.up.sql**:
+```
+create table contactos (
+  id int unsigned not null auto_increment primary key,
+  nombre varchar(255),
+  paterno varchar(255),
+  materno varchar(255)
+);
+```
+Ir a la terminal donde hiciste la primara migracion si esta habierta o habrir una nueva terminal en el folder del proyecto y ejecutar:
+1. Crear la migracion de contactos: `lein migrate`
+2. Crear un data grid de contactos: `lein grid contactos`
+    1. Te dara un mensaje: Codigo generado en: src/sk/handlers/admin/contactos
+        1. `controller.clj`
+        2. `model.clj`
+        3. `view.clj`
+
 ## License
 
 Copyright © 2024 FIXME
