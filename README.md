@@ -19,7 +19,7 @@ Una libreria que genera una pagina web full stack
 4. Renombrar: `/resources/private/config_example.clj` a `/resources/private/config.clj`
 5. Configurar: `/resources/private/config.clj`
 6. Crear una base de datos con el mismo nombre de la configuracion **5.** Usando dbeaver o tu cliente de preferencia.
-7. En el folder donde esta el codigo abrir una terminal y ejecutar: **lein run**
+7. En el folder donde esta el codigo abrir una terminal y ejecutar: **lein with-profile dev run**
 8. Abrir otra terminal en el folder donde esta el codigo y ejecutar: **lein repl**
 9. Abrir otra terminal en el folder donde esta el codigo y ejecutar:
     1. **lein migrate** - Esto creara la tabla de **users**, lo puedes verificar en dbeaver.
