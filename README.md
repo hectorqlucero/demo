@@ -220,7 +220,7 @@ create table contactos (
   materno varchar(255)
 );
 ```
-Ir a la terminal donde hiciste la primara migracion si esta habierta o habrir una nueva terminal en el folder del proyecto y ejecutar:
+Ir a la terminal donde hiciste la primara migracion si esta abierta o abrir una nueva terminal en el folder del proyecto y ejecutar:
 1. Crear la migracion de contactos: `lein migrate`
 2. Crear un data grid de contactos: `lein grid contactos`
     1. Te dara un mensaje: Codigo generado en: src/sk/handlers/admin/contactos
@@ -428,7 +428,8 @@ Hay que agregar al menu los cambios necesarios en src/sk/**layout.clj**:
           (= (user-level) "A")
           (= (user-level) "S"))
      (list
-       [:li [:a.dropdown-item {:href "/admin/contactos"} "Contactos"]] ; Cambiar 'nil' por esta linea agregeda para crear la opción en el menu
+       nil                                                             ; Borrar esta linea
+       [:li [:a.dropdown-item {:href "/admin/contactos"} "Contactos"]] ; Agregar esta linea
       (when (= (user-level) "S")
         [:li [:a.dropdown-item {:href "/admin/users"} "Usuarios"]])))))
 
@@ -556,6 +557,249 @@ Hay que agregar al menu los cambios necesarios en src/sk/**layout.clj**:
          [:footer.bg-light.text-center.fixed-bottom
           [:span  "Copyright &copy;" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]]))
 ```
+`Guardar y compilar src/sk/core.clj`
+
+Ir al browser y veras el nuevo data grid generado en el menu Administrar. Crea unos cuantos records para alimentar el sistema.
+
+## Ahora vamos a crear un dashboard i.e. un reporte con mas funcionalidad, que se puede imprimir o generar un pdf.
+Ir a la terminal donde hiciste la primera migracion si esta abierta o abrir una nueva terminal en el folder del proyector y ejecutar:
+1. Crear un dashboard de contactos: 'lein dashboard contactos`
+    1. Te dara un mensaje: Codigo generado en: src/sk/handlers/contactos
+        1. `controller.clj`
+        2. `model.clj`
+        3. `view.clj`
+
+**Paginas generadas**:
+Formatear la pagina src/sk/handlers/contactos/**controller.clj**, la pagina se vera asi:
+```
+(ns sk.handlers.contactos.controller
+  (:require [sk.layout :refer [application]]
+            [sk.models.util :refer [get-session-id]]
+            [sk.handlers.contactos.model :refer [get-contactos]]
+            [sk.handlers.contactos.view :refer [contactos-view]]))
+
+(defn contactos [_]
+  (let [title "Contactos"
+        ok (get-session-id)
+        js nil
+        rows (get-contactos)
+        content (contactos-view title rows)]
+    (application title ok js content)))
+```
+Formatear la pagina src/handlers/contactos/**model.clj**, la pagina se vera asi:
+```
+(ns sk.handlers.contactos.model
+  (:require [sk.models.crud :refer [Query db]]
+            [clojure.string :as st]))
+
+(def get-contactos-sql
+  (str
+   "
+SELECT *
+FROM contactos
+"))
+
+(defn get-contactos
+  []
+  (Query db get-contactos-sql))
+
+(def get-contactos-id-sql
+  (str
+   "
+SELECT *
+FROM contactos
+WHERE id = ?
+"))
+
+(defn get-contactos-id
+  [id]
+  (first (Query db [get-contactos-id-sql id])))
+```
+Formatear la pagina src/sk/handlers/admin/contactos/**view.clj**, la pagina se vera asi:
+```
+(ns sk.handlers.contactos.view
+  (:require [sk.models.grid :refer [build-dashboard]]))
+
+(defn contactos-view
+  [title rows]
+  (let [table-id "contactos_table"
+        labels ["NOMBRE" "PATERNO" "MATERNO"]
+        db-fields [:nombre :paterno :materno]
+        fields (zipmap db-fields labels)]
+    (build-dashboard title rows table-id fields)))
+```
+Ahora hay que agregar las rutas para que el 'web server' las pueda ejecutar.
+Las rutas son privadas porque requiren un login. Las rutas privadas estan aqui: /src/sk/routes/**proutes.clj** y el contenido es el siguiente:
+```
+(ns sk.routes.proutes
+  (:require [compojure.core :refer [defroutes GET POST]]
+            [sk.handlers.admin.users.controller :as users-controller]
+            [sk.handlers.admin.contactos.controller :as contactos-controller]
+            [sk.handlers.users.controller :as users-dashboard]                ; Borrar esta linea
+            [sk.handlers.contactos.controller :as contactos-dashboard))       ;Agregar esta linea
+
+(defroutes proutes
+  (GET "/admin/users" params users-controller/users)
+  (GET "/admin/users/edit/:id" [id] (users-controller/users-edit id))
+  (POST "/admin/users/save" params [] (users-controller/users-save params))
+  (GET "/admin/users/add" params [] (users-controller/users-add params))
+  (GET "/admin/users/delete/:id" [id] (users-controller/users-delete id))
+
+  (GET "/admin/contactos" params contactos-controller/contactos)
+  (GET "/admin/contactos/edit/:id" [id] (contactos-controller/contactos-edit id))
+  (POST "/admin/contactos/save" params [] (contactos-controller/contactos-save params))
+  (GET "/admin/contactos/add" params [] (contactos-controller/contactos-add params))
+  (GET "/admin/contactos/delete/:id" [id] (contactos-controller/contactos-delete id))
+
+  (GET "/users" params [] (users-dashboard/users params)                    ; Borrar esta linea
+  (GET "/contactos" params [] (contactos-dashboard/contactos params))       ; Agregar esta linea
+```
+Hay que agregar al menu los cambios necesarios en src/sk/**layout.clj**:
+```
+(ns sk.layout
+  (:require [clj-time.core :as t]
+            [hiccup.page :refer [html5 include-css include-js]]
+            [sk.models.util :refer [user-level user-name]]
+            [sk.migrations :refer [config]]))
+
+(defn build-admin []
+  (list
+   nil
+   (when (or
+          (= (user-level) "A")
+          (= (user-level) "S"))
+     (list
+      [:li [:a.dropdown-item {:href "/admin/contactos"} "Contactos"]]
+      (when (= (user-level) "S")
+        [:li [:a.dropdown-item {:href "/admin/users"} "Usuarios"]])))))
+
+(defn menus-private []
+  (list
+   [:nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+    [:a.navbar-brand {:href "/"}
+     [:img.rounded-circle {:src "/images/logo.png"
+                           :alt (:site-name config)
+                           :style "width:40px;"}]]
+    [:button.navbar-toggler {:type "button"
+                             :data-bs-toggle "collapse"
+                             :data-bs-target "#collapsibleNavbar"}
+     [:span.navbar-toggler-icon]]
+    [:div#collapsibleNavbar.collapse.navbar-collapse
+     [:ul.navbar-nav
+      [:li.nav-item [:a.nav-link {:href "/users"} "Dashboard"]]       ; Borrar esta linea
+      [:li.nav-item [:a.nav-link {:href "/contactos"} "Contactos"]]   ; Agregar esta linea
+      (when
+       (or
+        (= (user-level) "U")
+        (= (user-level) "A")
+        (= (user-level) "S"))
+        [:li.nav-item.dropdown
+         [:a.nav-link.dropdown-toggle {:href "#"
+                                       :id "navdrop"
+                                       :data-bs-toggle "dropdown"} "Administrar"]
+         [:ul.dropdown-menu {:aria-labelledby "navdrop"}
+          (build-admin)]])
+      [:li.nav-item [:a.nav-link {:href "/home/logoff"} (str "Salir [" (user-name) "]")]]]]]))
+
+(defn menus-public []
+  (list
+   [:nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+    [:a.navbar-brand {:href "/"}
+     [:img.rounded-circle {:src "/images/logo.png"
+                           :alt (:site-name config)
+                           :style "width:40px;"}]]
+    [:button.navbar-toggler {:type "button"
+                             :data-bs-toggle "collapse"
+                             :data-bs-target "#collapsibleNavbar"
+                             :aria-expanded "false"
+                             :aria-label "Toggle navigation"}
+     [:span.navbar-toggler-icon]]
+    [:div#collapsibleNavbar.navbar-collapse
+     [:ul.navbar-nav.me-auto.mb-2.mb-lg-0
+      [:li.nav-item [:a.nav-link {:href "/home/login"
+                                  :aria-current "page"} "Entrar al sitio"]]]]]))
+
+(defn menus-none []
+  (list
+   [:nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+    [:a.navbar-brand {:href "/"}
+     [:img.rounded-circle {:src "/images/logo.png"
+                           :alt (:site-name config)
+                           :style "width:40px;"}]]
+    [:button.navbar-toggler {:type "button"
+                             :data-bs-toggle "collapse"
+                             :data-bs-target "#collapsibleNavbar"
+                             :aria-expanded "false"
+                             :aria-label "Toggle navigation"}
+     [:span.navbar-toggler-icon]]
+    [:div#collapsibleNavbar.collapse.navbar-collapse]]))
+
+(defn app-css []
+  (list
+   (include-css "/bootstrap5/css/bootstrap.min.css")
+   (include-css "/bootstrap-icons/font/bootstrap-icons.css")
+   (include-css "/bootstrap-table-master/dist/bootstrap-table.min.css")))
+
+(defn app-js []
+  (list
+   (include-js "/js/jquery.min.js")
+   (include-js "/bootstrap5/js/bootstrap.bundle.min.js")
+   (include-js "/bootstrap-table-master/dist/bootstrap-table.min.js")
+   (include-js "/bootstrap-table-master/dist/extensions/print/bootstrap-table-print.min.js")
+   (include-js "/bootstrap-table-master/dist/locale/bootstrap-table-es-MX.min.js")
+   (include-js "/js/extra.js")))
+
+(defn application [title ok js & content]
+  (html5 {:ng-app (:site-name config) :lang "en"}
+         [:head
+          [:title (if title
+                    title
+                    (:site-name config))]
+          [:meta {:charset "UTF-8"}]
+          [:meta {:name "viewport"
+                  :content "width=device-width, initial-scale=1"}]
+          (app-css)
+          [:link {:rel "shortcut icon"
+                  :type "image/x-icon"
+                  :href "data:image/x-icon;,"}]]
+         [:body
+          [:div.container.flex-nowrap.overflow-auto.margin-top {:style "margin-top:75px;margin-bottom:25px;"}
+           (cond
+             (= ok -1) (menus-none)
+             (= ok 0) (menus-public)
+             (> ok 0) (menus-private))
+           [:div {:style "padding-left:14px;"} content]]
+          (app-js)
+          js
+          [:footer.bg-light.text-center.fixed-bottom
+           [:span  "Copyright &copy;" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]]))
+
+(defn error-404 [content return-url]
+  (html5 {:ng-app (:site-name config) :lang "es"}
+         [:head
+          [:title "Mesaje"]
+          [:meta {:charset "UTF-8"}]
+          [:meta {:name "viewport"
+                  :content "width=device-width, initial-scale=1"}]
+          (app-css)
+          [:link {:rel "shortcut iconcompojure"
+                  :type "image/x-icon"
+                  :href "data:image/x-icon;,"}]]
+         [:body
+          [:div.container.flex-nowrap.overflow-auto.margin-top {:style "margin-top:75px;margin-bottom:25px;"}
+           (menus-none)
+           [:div {:style "padding-left:14px;"}
+            [:div
+             [:p [:h3 [:b "Mensaje: "]] [:h3 content]]
+             [:p [:h3 [:a {:href return-url} "Clic aqui para " [:strong "Continuar"]]]]]]]
+
+          (app-js)
+          nil
+          [:footer.bg-light.text-center.fixed-bottom
+           [:span  "Copyright &copy;" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]]))
+```
+Refresca la pagina web en el browser en http://localhost:3000 y veras los cambios.
+Nota: Hay que compilar cada archivo/pagina arriva si hiciste cambios...
 
 ## License
 
