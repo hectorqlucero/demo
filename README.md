@@ -45,8 +45,11 @@ Una libreria que genera una pagina web full stack
 
 ## Ejemplo - Crear una pagina de contactos
 Nota: con la configuracion de vim que recomiendo: dotfiles: https://github.com/hectorqlucero/vim
+
 **\\\\** Abre vifm para buscar y seleccionar archivos etc..
+
 **cpp** es para compilar funciones
+
 **:Require** para compilar toda la pagina
 
 `git clone https://github.com/hectorqlucero/demo.git`
