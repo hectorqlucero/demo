@@ -23,7 +23,7 @@ Una libreria que genera una pagina web full stack
 8. Abrir otra terminal en el folder donde esta el codigo y ejecutar: **lein repl**
 9. Abrir otra terminal en el folder donde esta el codigo y ejecutar:
     1. **lein migrate** - Esto creara la tabla de **users**, lo puedes verificar en dbeaver.
-    2. **lein database** - Esto creara tres usuarios temporaios.
+    2. **lein database** - Esto creara tres usuarios temporarios.
         1. **Usuario**: user@gmail.com    **contraseña**: user
         2. **Usuario**: admin@gmail.com   **contraseña**: admin
         3. **Usuario**: sistema@gmail.com **contraseña**: sistema
@@ -799,7 +799,7 @@ Hay que agregar al menu los cambios necesarios en src/sk/**layout.clj**:
            [:span  "Copyright &copy;" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]]))
 ```
 Refresca la pagina web en el browser en http://localhost:3000 y veras los cambios.
-Nota: Hay que compilar cada archivo/pagina arriva si hiciste cambios...
+Nota: Hay que compilar cada archivo/pagina arriba si hiciste cambios...
 
 ## License
 
