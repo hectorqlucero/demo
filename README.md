@@ -206,12 +206,12 @@ Si haces clic en **Salir [System User]** te sacara de la pagina y tu sesion se d
 La pagina esta lista ahora para agregarle nuestro sistema de contactos...
 
 ## Ahora hay que crear nuestar pagina de contactos
-Crear en resources/migrations/ -> resources/migrations/002-contactos.down.sql con el contenido:
+Crear en resources/migrations/ -> resources/migrations/**002-contactos.down.sql** con el contenido:
 ```
 drop table contactos;
 ```
 
-Crear en resources/migrations/ - resources/migrations/002-contactos.up.sql con el contenido:
+Crear en resources/migrations/ - resources/migrations/**002-contactos.up.sql** con el contenido:
 ```
 create table contactos (
   id int unsigned not null auto_increment primary key,
@@ -563,7 +563,7 @@ Ir al browser y veras el nuevo data grid generado en el menu Administrar. Crea u
 
 ## Ahora vamos a crear un dashboard i.e. un reporte con mas funcionalidad, que se puede imprimir o generar un pdf.
 Ir a la terminal donde hiciste la primera migracion si esta abierta o abrir una nueva terminal en el folder del proyector y ejecutar:
-1. Crear un dashboard de contactos: 'lein dashboard contactos`
+1. Crear un dashboard de contactos: `lein dashboard contactos`
     1. Te dara un mensaje: Codigo generado en: src/sk/handlers/contactos
         1. `controller.clj`
         2. `model.clj`
