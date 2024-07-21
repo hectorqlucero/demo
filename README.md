@@ -45,6 +45,7 @@ Una libreria que genera una pagina web full stack
 
 ## Ejemplo - Crear una pagina de contactos
 **Nota:** con la configuracion de vim que recomiendo: dotfiles: https://github.com/hectorqlucero/vim
+**Muy Importante:** Hay que compilar todos los archivos que modifiques.
 
 **\\\\** Abre vifm para buscar y seleccionar archivos etc..
 
@@ -567,7 +568,10 @@ Hay que agregar al menu los cambios necesarios en src/sk/**layout.clj**:
 ```
 `Guardar y compilar src/sk/core.clj`
 
-Ir al browser y veras el nuevo data grid generado en el menu Administrar. Crea unos cuantos records para alimentar el sistema.
+En caso de que no compilaste los archivos que cambiaron hay que parar `lein with-profile dev run` con un ctrl-c  en la terminal que lo empezaste
+y volverlo a ejecutar: `lein with-profile dev run`
+
+Ir al browser http://localhost:3000 y veras el nuevo data grid generado en el menu Administrar. Crea unos cuantos records para alimentar el sistema.
 
 ## Ahora vamos a crear un dashboard i.e. un reporte con mas funcionalidad, que se puede imprimir o generar un pdf.
 Ir a la terminal donde hiciste la primera migracion si esta abierta o abrir una nueva terminal en el folder del proyector y ejecutar:
