@@ -11,7 +11,7 @@
           (= (user-level) "A")
           (= (user-level) "S"))
      (list
-       nil
+      nil
       (when (= (user-level) "S")
         [:li [:a.dropdown-item {:href "/admin/users"} "Usuarios"]])))))
 
@@ -79,7 +79,8 @@
   (list
    (include-css "/bootstrap5/css/bootstrap.min.css")
    (include-css "/bootstrap-icons/font/bootstrap-icons.css")
-   (include-css "/bootstrap-table-master/dist/bootstrap-table.min.css")))
+   (include-css "/bootstrap-table-master/dist/bootstrap-table.min.css")
+   (include-css "/css/extra.css")))
 
 (defn app-js []
   (list
@@ -112,8 +113,8 @@
            [:div {:style "padding-left:14px;"} content]]
           (app-js)
           js
-         [:footer.bg-light.text-center.fixed-bottom
-          [:span  "Copyright &copy;" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]]))
+          [:footer.bg-light.text-center.fixed-bottom
+           [:span  "Copyright &copy;" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]]))
 
 (defn error-404 [content return-url]
   (html5 {:ng-app (:site-name config) :lang "es"}
@@ -136,5 +137,5 @@
 
           (app-js)
           nil
-         [:footer.bg-light.text-center.fixed-bottom
-          [:span  "Copyright &copy;" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]]))
+          [:footer.bg-light.text-center.fixed-bottom
+           [:span  "Copyright &copy;" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]]))

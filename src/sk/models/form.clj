@@ -36,23 +36,23 @@
      (anti-forgery-field)
      [:div.form-group
       [:label.font-weight-bold {:for "username"} "Email:"]
-      [:input.form-control {:id "username"
-                            :name "username"
-                            :type "email"
-                            :required "true"
-                            :oninvalid "this.setCustomValidity('Email es requerido...')"
-                            :oninput "this.setCustomValidity('')"
-                            :placeholder "Email aqui..."}]]
+      [:input.mandatory.form-control {:id "username"
+                                      :name "username"
+                                      :type "email"
+                                      :required "true"
+                                      :oninvalid "this.setCustomValidity('Email es requerido...')"
+                                      :oninput "this.setCustomValidity('')"
+                                      :placeholder "Email aqui..."}]]
      [:div.form-group
       [:label.font-weight-bold {:for "password"} "Contraseña:"]
-      [:input.form-control {:id "password"
-                            :style "margin-bottom:5px;"
-                            :name "password"
-                            :required "true"
-                            :oninvalid "this.setCustomValidity('La contraseña es requerida...')"
-                            :oninput "this.setCustomValidity('')"
-                            :placeholder "Contraseña aqui..."
-                            :type "Password"}]]
+      [:input.mandatory.form-control {:id "password"
+                                      :style "margin-bottom:5px;"
+                                      :name "password"
+                                      :required "true"
+                                      :oninvalid "this.setCustomValidity('La contraseña es requerida...')"
+                                      :oninput "this.setCustomValidity('')"
+                                      :placeholder "Contraseña aqui..."
+                                      :type "Password"}]]
      [:input.btn.btn-primary {:type "submit"
                               :value "Ingresar al sitio"
                               :style "margin-right:2px;"}]
@@ -101,7 +101,9 @@
   (list
    [:div.form-group
     [:label.font-weight-bold {:for (:name args)} (:label args)]
-    [:input.form-control args]]))
+    (if (= (:required args) true)
+      [:input.mandatory.form-control args]
+      [:input.form-control args])]))
 
 (defn build-textarea
   "args:label,id,name,placeholder,required,error,value"
@@ -109,13 +111,21 @@
   (list
    [:div.form-group
     [:label.font-weight-bold {:for (:name args)} (:label args)]
-    [:textarea.form-control {:id (:id args)
-                             :name (:name args)
-                             :rows (:rows args)
-                             :placeholder (:placeholder args)
-                             :required (:required args)
-                             :oninvalid (str "this.setCustomValidity('" (:error args) "')")
-                             :oninput "this.setCustomValidity('')"} (:value args)]]))
+    (if (= (:required args) true)
+      [:textarea.mandatory.form-control {:id (:id args)
+                                         :name (:name args)
+                                         :rows (:rows args)
+                                         :placeholder (:placeholder args)
+                                         :required (:required args)
+                                         :oninvalid (str "this.setCustomValidity('" (:error args) "')")
+                                         :oninput "this.setCustomValidity('')"} (:value args)]
+      [:textarea.form-control {:id (:id args)
+                               :name (:name args)
+                               :rows (:rows args)
+                               :placeholder (:placeholder args)
+                               :required (:required args)
+                               :oninvalid (str "this.setCustomValidity('" (:error args) "')")
+                               :oninput "this.setCustomValidity('')"} (:value args)])]))
 
 (defn build-select
   "args:label,id,name,required,error"
@@ -124,15 +134,25 @@
     (list
      [:div.form-group
       [:label.font-weight-bold {:for (:name args)} (:label args)]
-      [:select.form-control.form-select {:id (:id args)
-                             :name (:name args)
-                             :required (:required args)
-                             :oninvalid (str "this.setCustomValidity('" (:error args) "')")
-                             :oninput "this.setCustomValidity('')"}
-       (map (partial (fn [option]
-                       (list
-                        [:option {:value (:value option)
-                                  :selected (if (= (:value args) (:value option)) true false)} (:label option)]))) (:options args))]])))
+      (if (= (:required args true))
+        [:select.mandatory.form-control.form-select {:id (:id args)
+                                                     :name (:name args)
+                                                     :required (:required args)
+                                                     :oninvalid (str "this.setCustomValidity('" (:error args) "')")
+                                                     :oninput "this.setCustomValidity('')"}
+         (map (partial (fn [option]
+                         (list
+                          [:option {:value (:value option)
+                                    :selected (if (= (:value args) (:value option)) true false)} (:label option)]))) (:options args))]
+        [:select.form-control.form-select {:id (:id args)
+                                           :name (:name args)
+                                           :required (:required args)
+                                           :oninvalid (str "this.setCustomValidity('" (:error args) "')")
+                                           :oninput "this.setCustomValidity('')"}
+         (map (partial (fn [option]
+                         (list
+                          [:option {:value (:value option)
+                                    :selected (if (= (:value args) (:value option)) true false)} (:label option)]))) (:options args))])])))
 
 (defn build-radio
   [args]
