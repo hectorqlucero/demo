@@ -39,6 +39,7 @@
 (defroutes app-routes
   (route/resources "/")
   (route/files (:path config) {:root (:uploads config)})
+  (route/files (:barcodes-path config) {:root (:barcodes config)})
   (wrap-public-routes open-routes)
   (wrap-login (wrap-private-routes proutes))
   (route/not-found "Not Found"))

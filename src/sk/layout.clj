@@ -11,7 +11,12 @@
           (= (user-level) "A")
           (= (user-level) "S"))
      (list
-      nil
+      [:li [:a.dropdown-item {:href "/admin/eventos"} "Eventos"]]
+      [:li [:a.dropdown-item {:href "/admin/carrera"} "Carrera Configurar"]]
+      [:li [:a.dropdown-item {:href "/admin/categorias"} "Categorias Configurar"]]
+      [:li [:a.dropdown-item {:href "/admin/mensajes"} "Mensajes Configurar"]]
+      [:li [:a.dropdown-item {:href "/admin/limpiar"} "Limpiar Contrareloj"]]
+      [:li [:a.dropdown-item {:href "/procesar/lector"} "Procesar Lector->carreras"]]
       (when (= (user-level) "S")
         [:li [:a.dropdown-item {:href "/admin/users"} "Usuarios"]])))))
 
@@ -19,7 +24,7 @@
   (list
    [:nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
     [:a.navbar-brand {:href "/"}
-     [:img.rounded-circle {:src "/images/logo.png"
+     [:img.rounded-circle {:src "/images/logo.jpg"
                            :alt (:site-name config)
                            :style "width:40px;"}]]
     [:button.navbar-toggler {:type "button"
@@ -28,7 +33,10 @@
      [:span.navbar-toggler-icon]]
     [:div#collapsibleNavbar.collapse.navbar-collapse
      [:ul.navbar-nav
-      [:li.nav-item [:a.nav-link {:href "/users"} "Dashboard"]]
+      [:li.nav-item [:a.nav-link {:href "/eventos/list"} "Eventos"]]
+      [:li.nav-item [:a.nav-link {:href "/registro"} "Registrar aqui"]]
+      [:li.nav-item [:a.nav-link {:href "/display/registered"} "Registrados"]]
+      [:li.nav-item [:a.nav-link {:href "/display/creloj"} "Contra-Reloj"]]
       (when
        (or
         (= (user-level) "U")
@@ -46,7 +54,7 @@
   (list
    [:nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
     [:a.navbar-brand {:href "/"}
-     [:img.rounded-circle {:src "/images/logo.png"
+     [:img.rounded-circle {:src "/images/logo.jpg"
                            :alt (:site-name config)
                            :style "width:40px;"}]]
     [:button.navbar-toggler {:type "button"
@@ -57,14 +65,17 @@
      [:span.navbar-toggler-icon]]
     [:div#collapsibleNavbar.navbar-collapse
      [:ul.navbar-nav.me-auto.mb-2.mb-lg-0
+      [:li.nav-item [:a.nav-link {:href "/eventos/list"} "Eventos"]]
+      [:li.nav-item [:a.nav-link {:href "/registro"} "Registrar aquí"]]
+      [:li.nav-item [:a.nav-link {:href "/display/oregistered"} "Registrados"]]
       [:li.nav-item [:a.nav-link {:href "/home/login"
-                                  :aria-current "page"} "Entrar al sitio"]]]]]))
+                                  :aria-current "page"} "Entrar"]]]]]))
 
 (defn menus-none []
   (list
    [:nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
     [:a.navbar-brand {:href "/"}
-     [:img.rounded-circle {:src "/images/logo.png"
+     [:img.rounded-circle {:src "/images/logo.jpg"
                            :alt (:site-name config)
                            :style "width:40px;"}]]
     [:button.navbar-toggler {:type "button"

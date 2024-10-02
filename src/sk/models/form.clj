@@ -187,14 +187,19 @@
 (defn build-primary-anchor-button
   "args: label,href"
   [args]
-  [:a.btn.btn-primary {:type "button"
-                       :href (:href (:href args))} (:label args)])
+  [:a.btn.btn-primary {:role "button"
+                       :href (:href args)} (:label args)])
+
+(defn build-submit-button
+  "args: label"
+  [args]
+  [:button.btn-primary {:type "submit"} (:label args)])
 
 (defn build-secondary-anchor-button
   "args: label,href"
   [args]
-  [:a.btn.btn-secondary {:type "button"
-                         :href (:href (:href args))} (:label args)])
+  [:a.btn.btn-secondary {:role "button"
+                         :href (:href args)} (:label args)])
 
 (defn build-modal-buttons
   [& args]
@@ -218,6 +223,18 @@
      fields
      buttons]]))
 ;; End form
+
+(defn build-form
+  [title href fields buttons]
+  (list
+   [:div.container.border.w-50.bg-light
+    [:legend title]
+    [:form {:method "POST"
+            :class "fm"
+            :action href}
+     (anti-forgery-field)
+     fields
+     [:div.form-group {:style "margin-top:5px;"} buttons]]]))
 
 (comment
   "Ejemplo de uso: value=mysql data"
