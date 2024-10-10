@@ -131,7 +131,26 @@
   (first (Query db ["select * from carreras where id = ?" carrera-id])))
 ;; End QR
 
+(defn get-active-carrera-id []
+  (:id (first (Query db ["select id from carrera where activa = 'S'"]))))
+
+; Start get-corredor-by-numero
+(def get-corredor-by-numero-sql
+  "
+  select *
+  from carreras
+  where
+  carrera_id = ?
+  and numero_asignado = ?
+  ")
+
+(defn get-corredor-by-numero [carrera-id numero]
+  (first (Query db [get-corredor-by-numero-sql carrera-id numero])))
+;; End get-corredor-by-numero
+
 (comment
+  (get-corredor-by-numero (get-active-carrera-id) 704)
+  (get-active-carrera-id)
   (get-carreras 416)
   (generate-barcode 175)
   (create-barcode 175)

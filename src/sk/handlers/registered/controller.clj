@@ -8,7 +8,10 @@
                      registered-js
                      update-number-view
                      cert-view
+                     imprimir-cert-view
                      update-number-script]]
+            [sk.handlers.registered.model :refer [get-active-carrera-id
+                                                  get-corredor-by-numero]]
             [noir.response :refer [redirect]]
             [sk.layout :refer [application error-404]]
             [cheshire.core :refer [generate-string]]
@@ -69,6 +72,22 @@
       (generate-string {:message "Procesado correctamente!"})
       (generate-string {:message "No se pudo asignar el numero!"}))))
 
+(defn imprimir-cert [_]
+  (let [title "Imprimir certificado"
+        ok (get-session-id)
+        js nil
+        content (imprimir-cert-view title)]
+    (application title ok js content)))
+
+(defn imprimir-cert-download [{params :params}]
+  (let [numero_asignado (:numero_asignado params)
+        row (get-corredor-by-numero (get-active-carrera-id) numero_asignado)
+        carreras-id (:id row)]
+    (cert carreras-id)))
+
 (comment
+  (get-corredor-by-numero (get-active-carrera-id) 704)
+  (imprimir-cert-download 704)
+  (cert 428)
   (registered-view 1)
   (registrados))

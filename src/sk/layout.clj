@@ -68,6 +68,7 @@
       [:li.nav-item [:a.nav-link {:href "/eventos/list"} "Eventos"]]
       [:li.nav-item [:a.nav-link {:href "/registro"} "Registrar aquí"]]
       [:li.nav-item [:a.nav-link {:href "/display/oregistered"} "Registrados"]]
+      [:li.nav-item [:a.nav-link {:href "/imprimir/cert"} "Imprimir certificado"]]
       [:li.nav-item [:a.nav-link {:href "/home/login"
                                   :aria-current "page"} "Entrar"]]]]]))
 

@@ -27,5 +27,7 @@
   (GET "/display/oregistered/:carrera_id" [carrera_id] (registered-dashboard/oregistered carrera_id))
   (GET "/update/number/:carrera_id" [carrera_id] (registered-dashboard/update-number carrera_id))
   (POST "/update/number" req [] (registered-dashboard/!update-number req))
+  (GET "/imprimir/cert" req [] (registered-dashboard/imprimir-cert req))
+  (POST "/imprimir/cert" req [] (registered-dashboard/imprimir-cert-download req))
   ;; End display registered
   )

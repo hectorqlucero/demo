@@ -6,6 +6,9 @@
             [sk.models.util :refer [parse-int
                                     zpl
                                     seconds->duration]]
+            [sk.models.form :refer [build-form
+                                    build-submit-button
+                                    build-field]]
             [sk.handlers.registro.model :refer [get-active-carreras]]
             [sk.handlers.registered.model
              :refer [get-active-carrera-name
@@ -287,7 +290,23 @@
      :body (as-stream (gen-pdf html
                                :margin {:top 20 :right 15 :bottom 50 :left 15}))}))
 ;; End cert-view
+
+;; Start imprimir-cert
+(defn imprimir-cert-view
+  [title]
+  (list
+   (build-form
+    title
+    "/imprimir/cert"
+    (build-field {:label "Numero Asignado"
+                  :id "numero_asignado"
+                  :name "numero_asignado"
+                  :value ""})
+    (build-submit-button {:label "Generar Certificado"}))))
+
+;; end imprimir-cert
 (comment
+  (imprimir-cert-view "testing")
   (create-barcode 175)
   (build-html 175)
   (get-registered 175)
