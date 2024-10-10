@@ -264,26 +264,6 @@
          })
    }")])
 
-;; Start cert-view
-; <div class= "container" >
-; <img src= "img_snow_wide.jpg" alt= "Snow" style= "width:100%;" >
-; <div class= "bottom-left" >Bottom Left</div>
-; <div class= "top-left" >Top Left</div>
-; <div class= "top-right" >Top Right</div>
-; <div class= "bottom-right" >Bottom Right</div>
-; <div class= "centered" >Centered</div>
-; </div>
-; .container {
-;   position: relative;
-;   text-align: center;
-;   color: white;
-; }
-; .centered {
-;   position: absolute;
-;   top: 50%;
-;   left: 50%;
-;   transform: translate(-50%, -50%);
-; }
 (defn build-cert-html [id row]
   (let [rider (:nombre row)
         categoria (get-categoria (:categoria_id row))
