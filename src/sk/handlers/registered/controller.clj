@@ -7,6 +7,7 @@
                      registered-pdf
                      registered-js
                      update-number-view
+                     cert-view
                      update-number-script]]
             [noir.response :refer [redirect]]
             [sk.layout :refer [application error-404]]
@@ -57,6 +58,9 @@
 
 (defn imprimir [id]
   (registered-pdf id))
+
+(defn cert [id]
+  (cert-view id))
 
 (defn update-db [id numero-asignado]
   (let [postvars {:numero_asignado numero-asignado}

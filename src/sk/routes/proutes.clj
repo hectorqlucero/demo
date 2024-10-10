@@ -46,6 +46,7 @@
   (GET "/display/registered" req [] (registered-controller/registrados req))
   (GET "/display/registered/:carrera_id" [carrera_id] (registered-controller/registered carrera_id))
   (GET "/imprimir/registered/:id" [id] (registered-controller/imprimir id))
+  (GET "/cert/registered/:id" [id] (registered-controller/cert id))
   (GET "/update/registered/:id/:no" [id no] (registered-controller/update-db id no))
   ;; End display registered
 

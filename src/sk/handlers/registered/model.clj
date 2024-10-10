@@ -11,15 +11,16 @@
 
 (def registered-sql
   "
-   select * 
-   from carreras 
-   where carrera_id = ?
-   order by
-   categoria_id,
-   nombre,
-   apell_paterno,
-   apell_materno
-   ")
+  select *,
+  ABS(TIMESTAMPDIFF(SECOND,llegada,salida)) as tiempo
+  from carreras 
+  where carrera_id = ?
+  order by
+  categoria_id,
+  nombre,
+  apell_paterno,
+  apell_materno
+  ")
 
 (def oregistered-sql
   "

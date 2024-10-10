@@ -9,6 +9,7 @@
             [sk.handlers.registro.model :refer [get-active-carreras]]
             [sk.handlers.registered.model
              :refer [get-active-carrera-name
+                     get-categoria
                      get-registered
                      get-oregistered
                      get-register-row
@@ -60,7 +61,9 @@
 ;; Start registered-view
 (defn my-body [row]
   (let [button-path (str "'" "/imprimir/registered/" (:id row) "'")
-        comando (str "location.href = " button-path)]
+        comando (str "location.href = " button-path)
+        cert-path (str "/cert/registered/" (:id row))
+        cert-comando (str "location.href = " cert-path)]
     [:tr
      [:td (swap! cnt inc)]
      [:td (:id row)]
@@ -76,7 +79,10 @@
                           :onblur (str "postValue(" (:id row) ", this.value)")}]]
      [:td [:button.btn.btn-outline-primary {:type "button"
                                             :onclick comando
-                                            :target "_blank"} "Registro"]]]))
+                                            :target "_blank"} "Registro"]]
+     [:td [:a.btn.btn-outline-primary {:role "button"
+                                       :href cert-path
+                                       :target "_blank"} "Certificado"]]]))
 
 (defn registered-view [carrera_id]
   (let [rows (get-oregistered carrera_id)
@@ -95,7 +101,8 @@
         [:th "Email"]
         [:th "Categoria"]
         [:th "No Asignado"]
-        [:th "Imprimir"]]]
+        [:th "Imprimir"]
+        [:th "Cert"]]]
       [:tbody (map my-body rows)]]]))
 ;; End registered-view
 
@@ -257,6 +264,49 @@
          })
    }")])
 
+;; Start cert-view
+; <div class= "container" >
+; <img src= "img_snow_wide.jpg" alt= "Snow" style= "width:100%;" >
+; <div class= "bottom-left" >Bottom Left</div>
+; <div class= "top-left" >Top Left</div>
+; <div class= "top-right" >Top Right</div>
+; <div class= "bottom-right" >Bottom Right</div>
+; <div class= "centered" >Centered</div>
+; </div>
+; .container {
+;   position: relative;
+;   text-align: center;
+;   color: white;
+; }
+; .centered {
+;   position: absolute;
+;   top: 50%;
+;   left: 50%;
+;   transform: translate(-50%, -50%);
+; }
+(defn build-cert-html [id row]
+  (let [rider (:nombre row)
+        categoria (get-categoria (:categoria_id row))
+        tiempo (seconds->duration (:tiempo row))]
+    (html5
+     [:div {:style "position: relative;text-align:center;color:white;"}
+      [:img {:src "http://localhost:3000//images/cert.jpg"
+             :alt "cert"
+             :style "width:100%"}]
+      [:div {:style "color:black;font-weight:900;font-size:1.87em;position:absolute;top:50%;left:10%;"} rider]
+      [:div {:style "color:black;font-weight:900;font-size:1.5em;position:absolute;top:59%;left:50%;transform:translate(-59%, -50%"} categoria]
+      [:div {:style "color:black;font-weight:900;font-size:1em;position:absolute;top:67%;left:11%;"} tiempo]])))
+
+(defn cert-view [id]
+  (let [row (get-register-row id)
+        filename (str "cert_" id ".pdf")
+        html (build-cert-html id row)]
+    {:headers {"Content-Type" "application/pdf"
+               "Content-Disposition" (str "attachment;filename=" filename)
+               "Cache-Control" "no-cache,no-store,max-age=0,must-revalidate,pre-check=0,post-check=0"}
+     :body (as-stream (gen-pdf html
+                               :margin {:top 20 :right 15 :bottom 50 :left 15}))}))
+;; End cert-view
 (comment
   (create-barcode 175)
   (build-html 175)
