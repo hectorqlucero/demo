@@ -207,6 +207,7 @@
       [:form {:id "uform"
               :method "post"
               :action "/update/number"}
+       [:legend nombre]
        (anti-forgery-field)
        [:input {:type "hidden"
                 :name "id"
@@ -219,30 +220,21 @@
                  :data-options "label:'Numero:',required:true"}]]]
 
       [:div {:style "text-align:center;padding:5px 0"}
-       [:a#submit.linkbutton.btn.btn-primary {:href "javascript:void(0)"
-                                              :onclick "submitForm()"
-                                              :style "width:80px;"} "Procesar"]]])))
+       [:button#submit_button.btn.btn-primary {:type "button"
+                                               :onClick "submitForm()"
+                                               :style "width:80px;"} "Procesar"]]])))
 
 (defn update-number-script []
   [:script
    "
-   function submitForm(){
-    $('#uform').form('submit', {
-      onSubmit: function() {
-        if($(this).form('validate')) {
-          $('a#submit').linkbutton('disable');
-        }
-        return $(this).form('validate');
-      },
-      success: function(result) {
-        var json = JSON.parse(result);
-        if(json.error) {
-          alert(json.error);
-          $('a#submit').linkbutton('enable');
-        } else {
-          alert('Procesado con existo!');
-          window.location.href = '/';
-        }
+   function submitForm() {
+    alert('im here...');
+    $.post('/update/number',$('#uform').serialize(),function(data) {
+      var message = JSON.parse(data);
+      if(message.error) {
+        alert(message.error);
+      } else {
+        alert(message.success);
       }
     });
    }
