@@ -14,36 +14,38 @@
             [sk.routes.routes :refer [open-routes]])
   (:gen-class))
 
-(defn wrap-login [hdlr]
-  (fn  [req]
-    (try
-      (if (nil? (session/get :user_id)) (redirect "home/login") (hdlr req))
-      (catch Exception _
-        {:status 400 :body "Unable to process your request!"}))))
+;; Middleware for handling login
+(defn wrap-login [handler]
+  (fn [request]
+    (if (nil? (session/get :user_id))
+      (redirect "home/login")
+      (try
+        (handler request)
+        (catch Exception _
+          {:status 400 :body "Unable to process your request!"})))))
 
-(defn wrap-exception-handling [hdlr]
-  (fn [req]
+;; Middleware for handling exceptions
+(defn wrap-exception-handling [handler]
+  (fn [request]
     (try
-      (hdlr req)
+      (handler request)
       (catch Exception _
         {:status 400 :body "Invalid data"}))))
 
-(defn wrap-public-routes [open-routes]
-  (fn [pub-routes]
-    (open-routes pub-routes)))
+;; Middleware to wrap public and private routes
+(defn wrap-routes [route-fn]
+  (fn [routes]
+    (route-fn routes)))
 
-(defn wrap-private-routes [proutes]
-  (fn [priv-routes]
-    (proutes priv-routes)))
-
+;; Define the application routes
 (defroutes app-routes
   (route/resources "/")
   (route/files (:path config) {:root (:uploads config)})
-  (route/files (:barcodes-path config) {:root (:barcodes config)})
-  (wrap-public-routes open-routes)
-  (wrap-login (wrap-private-routes proutes))
+  (wrap-routes open-routes)
+  (wrap-login (wrap-routes proutes))
   (route/not-found "Not Found"))
 
+;; Application configuration
 (def app
   (-> (routes #'app-routes)
       (wrap-exception-handling)
@@ -51,13 +53,13 @@
       (wrap-session)
       (session/wrap-noir-session*)
       (wrap-defaults (-> site-defaults
-                         (assoc-in [:security :anty-forgery] true)
+                         (assoc-in [:security :anti-forgery] true)
                          (assoc-in [:session :store] (cookie-store {:key KEY}))
                          (assoc-in [:session :cookie-attrs] {:max-age 28800})
                          (assoc-in [:session :cookie-name] "LS")))))
 
-(defn -main
-  []
+;; Main entry point
+(defn -main []
   (jetty/run-jetty app {:port (:port config)}))
 
 (comment

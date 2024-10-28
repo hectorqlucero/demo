@@ -63,7 +63,7 @@
    (build-select {:label "Nivel de Usuario:"
                   :id "level"
                   :name "level"
-                  :required "true"
+                  :required true
                   :error "El nivel es un campo requerido..."
                   :value (:level row)
                   :options [{:value ""
