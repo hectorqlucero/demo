@@ -1,6 +1,7 @@
 (ns sk.models.util
   (:require [noir.session :as session]
-            [sk.models.crud :refer [Query db]]))
+            [sk.models.crud :refer [Query db]]
+            [sk.migrations :refer [config]]))
 
 (defn get-session-id []
   (try
@@ -48,6 +49,12 @@
         minutes-desc (str day day-desc hour hour-desc minutes minutes-desc)
         seconds-desc (str day day-desc hour hour-desc minutes minutes-desc seconds seconds-desc)]
     minutes-desc))
+
+(defn image-link
+  [image-name]
+  (let [path (str (:path config) image-name "?" (random-uuid))
+        img-link (str "<img src='" path "' alt='" image-name "' with=32 height=32>")]
+    img-link))
 
 (comment
   (seconds->string 90061))
