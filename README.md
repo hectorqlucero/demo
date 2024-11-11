@@ -19,9 +19,10 @@ Una libreria que genera una pagina web full stack
    * `lein with-profile dev run`
 9. Abrir otra terminal nueva y correr:
    * `lein migrate`
+      * Creara la tabla **users**
    * `lein database`
-      * Creara un usuario user@gmail.com password **user**
-      * Creara un usuario admin@gmail.com password **admin**
-      * Creara un usuario sistema@gmail.com password **sistema**
+      * Creara un usuario user@gmail.com password **user** en la tabla **users**
+      * Creara un usuario admin@gmail.com password **admin** en la tabla **users**
+      * Creara un usuario sistema@gmail.com password **sistema** en la tabla **users**
 10. Correr la pagina:
     * `http:localhost:3000` en tu browser favorito
