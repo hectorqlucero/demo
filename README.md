@@ -29,4 +29,5 @@ Una libreria que genera una pagina web full stack
 
 #Video de demostración
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/https://www.youtube.com/watch?v=Ifnugf-dDsg/0.jpg)](http://www.youtube.com/watch?v=https://www.youtube.com/watch?v=Ifnugf-dDsg)
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=https://www.youtube.com/watch?v=Ifnugf-dDsg" target="_blank"><img src="http://img.youtube.com/vi/https://www.youtube.com/watch?v=Ifnugf-dDsg/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
