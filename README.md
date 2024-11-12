@@ -29,4 +29,4 @@ Una libreria que genera una pagina web full stack
 
 #Video de demostración
 
-<a href="https://www.youtuve.com/watch?v=Ifnugf-dDsg" target="_blank"></a>
+[Video tutorial](https://youtu.be/Ifnugf-dDsg)
