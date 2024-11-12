@@ -33,4 +33,4 @@ Una libreria que genera una pagina web full stack
 
 #Simple roladex - demostración un poco mas avanzada
 
-[Video Simple Roladex](https://youtu.be/ALH1Fehde_g)
+[Video Simple Roladex](https://youtu.be/TBArVXx3gl4)
