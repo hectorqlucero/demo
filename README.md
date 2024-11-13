@@ -27,10 +27,10 @@ Una libreria que genera una pagina web full stack
 10. Correr la pagina:
     * `http:localhost:3000` en tu browser favorito
 
-#Video de demostración
+# Video de demostración
 
 [Video tutorial](https://youtu.be/Ifnugf-dDsg)
 
-#Simple roladex - demostración un poco mas avanzada
+# Simple roladex - demostración un poco mas avanzada
 
 [Video Simple Roladex](https://youtu.be/TBArVXx3gl4)
