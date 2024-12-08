@@ -52,7 +52,6 @@
 (defn process-password
   [{params :params}]
   (let [username (:email params)
-        where-clause ["username = ?" username]
         password (crypt/encrypt (:password params))
         row (first (get-user username))
         active (:active row)]

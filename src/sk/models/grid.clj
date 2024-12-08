@@ -1,6 +1,5 @@
 (ns sk.models.grid
-  (:require [clojure.string :as st]
-            [ring.util.anti-forgery :refer [anti-forgery-field]]))
+  (:require [clojure.string :as st]))
 
 ;; start build-gid
 (defn build-grid-head
