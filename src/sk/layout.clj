@@ -11,69 +11,83 @@
           (= (user-level) "A")
           (= (user-level) "S"))
      (list
-       nil
+      nil
       (when (= (user-level) "S")
         [:li [:a.dropdown-item {:href "/admin/users"} "Usuarios"]])))))
 
 (defn menus-private []
   (list
    [:nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-    [:a.navbar-brand {:href "/"}
-     [:img.rounded-circle {:src "/images/logo.png"
-                           :alt (:site-name config)
-                           :style "width:40px;"}]]
-    [:button.navbar-toggler {:type "button"
-                             :data-bs-toggle "collapse"
-                             :data-bs-target "#collapsibleNavbar"}
-     [:span.navbar-toggler-icon]]
-    [:div#collapsibleNavbar.collapse.navbar-collapse
-     [:ul.navbar-nav
-      [:li.nav-item [:a.nav-link {:href "/users"} "Dashboard"]]
-      (when
-       (or
-        (= (user-level) "U")
-        (= (user-level) "A")
-        (= (user-level) "S"))
-        [:li.nav-item.dropdown
-         [:a.nav-link.dropdown-toggle {:href "#"
-                                       :id "navdrop"
-                                       :data-bs-toggle "dropdown"} "Administrar"]
-         [:ul.dropdown-menu {:aria-labelledby "navdrop"}
-          (build-admin)]])
-      [:li.nav-item [:a.nav-link {:href "/home/logoff"} (str "Salir [" (user-name) "]")]]]]]))
+    [:div.container-fluid
+     [:a.navbar-brand {:href "#"}
+      [:img {:src "/images/logo.png"
+             :alt (:site-name config)
+             :style "width:40px;height:40px;"}]]
+     [:button.navbar-toggler {:type "button"
+                              :data-bs-toggle "collapse"
+                              :data-bs-target "#collapsibleNavbar"
+                              :aria-controls "collapsibleNavbar"
+                              :aria-expanded "false"
+                              :aria-label "Toggle navigation"}
+      [:span.navbar-toggler-icon]]
+     [:div#collapsibleNavbar.collapse.navbar-collapse
+      [:ul.navbar-nav.ms-auto
+       [:li.nav-item [:a.nav-link.active {:href "/"
+                                          :aria-current "page"} "Inicio"]]
+       [:li.nav-item [:a.nav-link {:href "/users"} "Dashboard"]]
+       (when
+        (or
+         (= (user-level) "U")
+         (= (user-level) "A")
+         (= (user-level) "S"))
+         [:li.nav-item.dropdown
+          [:a.nav-link.dropdown-toggle {:href "#"
+                                        :id "navdrop0"
+                                        :role "button"
+                                        :data-bs-toggle "dropdown"
+                                        :aria-expanded "false"} "Administrar"]
+          [:ul.dropdown-menu {:aria-labelledby "navdrop0"}
+           (build-admin)]])
+       [:li.nav-item [:a.nav-link {:href "/home/logoff"} (str "Salir [" (user-name) "]")]]]]]]))
 
 (defn menus-public []
   (list
    [:nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-    [:a.navbar-brand {:href "/"}
-     [:img.rounded-circle {:src "/images/logo.png"
-                           :alt (:site-name config)
-                           :style "width:40px;"}]]
-    [:button.navbar-toggler {:type "button"
-                             :data-bs-toggle "collapse"
-                             :data-bs-target "#collapsibleNavbar"
-                             :aria-expanded "false"
-                             :aria-label "Toggle navigation"}
-     [:span.navbar-toggler-icon]]
-    [:div#collapsibleNavbar.navbar-collapse
-     [:ul.navbar-nav.me-auto.mb-2.mb-lg-0
-      [:li.nav-item [:a.nav-link {:href "/home/login"
-                                  :aria-current "page"} "Entrar al sitio"]]]]]))
+    [:div.container-fluid
+     [:a.navbar-brand {:href "#"}
+      [:img {:src "/images/logo.png"
+             :alt (:site-name config)
+             :style "width:40px;height:40px;"}]]
+     [:button.navbar-toggler {:type "button"
+                              :data-bs-toggle "collapse"
+                              :data-bs-target "#collapsibleNavbar"
+                              :aria-controls "collapsibleNavbar"
+                              :aria-expanded "false"
+                              :aria-label "Toggle navigation"}
+      [:span.navbar-toggler-icon]]
+     [:div#collapsibleNavbar.navbar-collapse
+      [:ul.navbar-nav.ms-auto
+       [:li.nav-item [:a.nav-link.active {:aria-current "page"
+                                          :href "/"} "Inicio"]]
+       [:li.nav-item [:a.nav-link {:href "/home/login"
+                                   :aria-current "page"} "Entrar al sitio"]]]]]]))
 
 (defn menus-none []
   (list
    [:nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-    [:a.navbar-brand {:href "/"}
-     [:img.rounded-circle {:src "/images/logo.png"
-                           :alt (:site-name config)
-                           :style "width:40px;"}]]
-    [:button.navbar-toggler {:type "button"
-                             :data-bs-toggle "collapse"
-                             :data-bs-target "#collapsibleNavbar"
-                             :aria-expanded "false"
-                             :aria-label "Toggle navigation"}
-     [:span.navbar-toggler-icon]]
-    [:div#collapsibleNavbar.collapse.navbar-collapse]]))
+    [:div.container-fluid
+     [:a.navbar-brand {:href "#"}
+      [:img {:src "/images/logo.png"
+             :alt (:site-name config)
+             :style "width:40px;height:40px;"}]]
+     [:button.navbar-toggler {:type "button"
+                              :data-bs-toggle "collapse"
+                              :data-bs-target "#collapsibleNavbar"
+                              :aria-controls "collapsibleNavbar"
+                              :aria-expanded "false"
+                              :aria-label "Toggle navigation"}
+      [:span.navbar-toggler-icon]]
+     [:div#collapsibleNavbar.collapse.navbar-collapse]]]))
 
 (defn app-css []
   (list
@@ -113,8 +127,8 @@
            [:div {:style "padding-left:14px;"} content]]
           (app-js)
           js
-         [:footer.bg-light.text-center.fixed-bottom
-          [:span  "Copyright &copy;" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]]))
+          [:footer.bg-light.text-center.fixed-bottom
+           [:span  "Copyright &copy;" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]]))
 
 (defn error-404 [content return-url]
   (html5 {:ng-app (:site-name config) :lang "es"}
@@ -137,5 +151,5 @@
 
           (app-js)
           nil
-         [:footer.bg-light.text-center.fixed-bottom
-          [:span  "Copyright &copy;" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]]))
+          [:footer.bg-light.text-center.fixed-bottom
+           [:span  "Copyright &copy;" (t/year (t/now)) " " (:company-name config) " - All Rights Reserved"]]]))
