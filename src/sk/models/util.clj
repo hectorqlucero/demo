@@ -1,60 +1,70 @@
 (ns sk.models.util
-  (:require [noir.session :as session]
-            [sk.models.crud :refer [Query db]]
-            [sk.migrations :refer [config]]))
+  (:require
+   [noir.session :as session]
+   [sk.migrations :refer [config]]
+   [sk.models.crud :refer [db Query safe-try]]))
 
-(defn get-session-id []
-  (try
-    (if (session/get :user_id) (session/get :user_id) 0)
-    (catch Exception e (.getMessage e))))
+(defn get-session-id
+  []
+  (safe-try
+   (if (session/get :user_id) (session/get :user_id) 0)))
 
-(defn user-level []
-  (let [id   (get-session-id)
-        type (if (nil? id)
-               nil
-               (:level (first (Query db ["select level from users where id = ?" id]))))]
-    type))
-
-(defn user-email []
-  (let [id    (get-session-id)
-        email (if (nil? id)
+(defn user-level
+  []
+  (safe-try
+   (let [id   (get-session-id)
+         type (if (nil? id)
                 nil
-                (:username (first (Query db ["select username from users where id = ?" id]))))]
-    email))
+                (:level (first (Query db ["select level from users where id = ?" id]))))]
+     type)))
 
-(defn user-name []
-  (let [id (get-session-id)
-        username (if (nil? id)
-                   nil
-                   (:name (first (Query db ["select CONCAT(firstname,' ',lastname) as name from users where id = ?" id]))))]
-    username))
+(defn user-email
+  []
+  (safe-try
+   (let [id    (get-session-id)
+         email (if (nil? id)
+                 nil
+                 (:username (first (Query db ["select username from users where id = ?" id]))))]
+     email)))
 
-(defn seconds->string [seconds]
-  (let [n seconds
-        day (int (/ n (* 24 3600)))
-        day-desc (if (= day 1) " day " " days ")
+(defn user-name
+  []
+  (safe-try
+   (let [id (get-session-id)
+         username (if (nil? id)
+                    nil
+                    (:name (first (Query db ["select CONCAT(firstname,' ',lastname) as name from users where id = ?" id]))))]
+     username)))
 
-        n (mod n (* 24 3600))
-        hour (int (/ n 3600))
-        hour-desc (if (= hour 1) " hour " " hours ")
+(defn seconds->string
+  [seconds]
+  (safe-try
+   (let [n seconds
+         day (int (/ n (* 24 3600)))
+         day-desc (if (= day 1) " day " " days ")
 
-        n (mod n 3600)
-        minutes (int (/ n 60))
-        minutes-desc (if (= minutes 1) " minute " " minutes ")
+         n (mod n (* 24 3600))
+         hour (int (/ n 3600))
+         hour-desc (if (= hour 1) " hour " " hours ")
 
-        n (mod n 60)
-        seconds (int n)
-        seconds-desc (if (= seconds 1) " second " " seconds ")
+         n (mod n 3600)
+         minutes (int (/ n 60))
+         minutes-desc (if (= minutes 1) " minute " " minutes ")
 
-        minutes-desc (str day day-desc hour hour-desc minutes minutes-desc)
-        seconds-desc (str day day-desc hour hour-desc minutes minutes-desc seconds seconds-desc)]
-    minutes-desc))
+         n (mod n 60)
+         seconds (int n)
+         seconds-desc (if (= seconds 1) " second " " seconds ")
+
+         minutes-desc (str day day-desc hour hour-desc minutes minutes-desc)
+         seconds-desc (str day day-desc hour hour-desc minutes minutes-desc seconds seconds-desc)]
+     minutes-desc)))
 
 (defn image-link
   [image-name]
-  (let [path (str (:path config) image-name "?" (random-uuid))
-        img-link (str "<img src='" path "' alt='" image-name "' with=32 height=32>")]
-    img-link))
+  (safe-try
+   (let [path (str (:path config) image-name "?" (random-uuid))
+         img-link (str "<img src='" path "' alt='" image-name "' with=32 height=32>")]
+     img-link)))
 
 (comment
   (seconds->string 90061))

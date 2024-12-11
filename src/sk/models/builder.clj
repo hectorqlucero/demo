@@ -1,8 +1,8 @@
 (ns sk.models.builder
-  (:require [clojure.java.io :as io]
-            [clojure.string :as st]
-            [hiccup.core :refer [html]]
-            [sk.models.crud :refer [db get-table-describe Save]]))
+  (:require
+   [clojure.java.io :as io]
+   [clojure.string :as st]
+   [sk.models.crud :refer [get-table-describe]]))
 
 (defn create-path [path]
   (.mkdir (io/file path)))

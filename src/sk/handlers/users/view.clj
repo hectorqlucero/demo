@@ -1,5 +1,6 @@
 (ns sk.handlers.users.view
-  (:require [sk.models.grid :refer [build-dashboard]]))
+  (:require
+   [sk.models.grid :refer [build-dashboard]]))
 
 (defn users-view
   [title rows]

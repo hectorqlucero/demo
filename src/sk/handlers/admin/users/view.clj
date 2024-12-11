@@ -1,14 +1,8 @@
 (ns sk.handlers.admin.users.view
   (:require
-   [sk.models.form :refer [form
-                           build-hidden-field
-                           build-field
-                           build-select
-                           build-radio
-                           build-modal-buttons]]
-   [sk.models.grid :refer [build-grid
-                           build-modal
-                           modal-script]]))
+   [sk.models.form :refer [build-field build-hidden-field build-modal-buttons
+                           build-radio build-select form]]
+   [sk.models.grid :refer [build-grid build-modal modal-script]]))
 
 (defn users-view
   [title rows]

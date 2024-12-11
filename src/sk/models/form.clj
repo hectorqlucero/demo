@@ -1,6 +1,7 @@
 (ns sk.models.form
-  (:require [ring.util.anti-forgery :refer [anti-forgery-field]]
-            [sk.migrations :refer [config]]))
+  (:require
+   [ring.util.anti-forgery :refer [anti-forgery-field]]
+   [sk.migrations :refer [config]]))
 
 (defn password-form
   [title]

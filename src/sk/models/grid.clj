@@ -1,5 +1,6 @@
 (ns sk.models.grid
-  (:require [clojure.string :as st]))
+  (:require
+   [clojure.string :as st]))
 
 ;; start build-gid
 (defn build-grid-head
