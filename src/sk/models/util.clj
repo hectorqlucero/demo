@@ -1,7 +1,8 @@
 (ns sk.models.util
-  (:require [noir.session :as session]
-            [sk.models.crud :refer [Query db]]
-            [sk.migrations :refer [config]]))
+  (:require
+   [noir.session :as session]
+   [sk.migrations :refer [config]]
+   [sk.models.crud :refer [db Query]]))
 
 (defn get-session-id []
   (try

@@ -1,5 +1,6 @@
 (ns sk.handlers.home.model
-  (:require [sk.models.crud :refer [Query Update db]]))
+  (:require
+   [sk.models.crud :refer [db Query Update]]))
 
 (defn get-user
   [username]

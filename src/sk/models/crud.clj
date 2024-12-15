@@ -1,10 +1,11 @@
 (ns sk.models.crud
-  (:require [clojure.java.jdbc :as j]
-            [clojure.java.io :as io]
-            [cheshire.core :refer [generate-string]]
-            [sk.migrations :refer [config]]
-            [clojure.string :as st])
-  (:import java.text.SimpleDateFormat))
+  (:require
+   [clojure.java.io :as io]
+   [clojure.java.jdbc :as j]
+   [clojure.string :as st]
+   [sk.migrations :refer [config]])
+  (:import
+   java.text.SimpleDateFormat))
 
 (def db {:classname                       (:db-class config)
          :subprotocol                     (:db-protocol config)
@@ -35,143 +36,110 @@
 (defn Query
   "queries database accepts query string"
   [db sql]
-  (try
-    (j/query db sql {:entities (j/quoted \`)})
-    (catch Exception e (.getMessage e))))
+  (j/query db sql {:entities (j/quoted \`)}))
 
 (defn Query!
   "queries database accepts query string no return value"
   [db sql]
-  (try
-    (j/execute! db sql {:entities (j/quoted \`)})
-    (catch Exception e (.getMessage e))))
+  (j/execute! db sql {:entities (j/quoted \`)}))
 
 (defn Insert
   "Inserts colums in the specified table"
   [db table row]
-  (try
-    (j/insert! db table row {:entities (j/quoted \`)})
-    (catch Exception e (.getMessage e))))
+  (j/insert! db table row {:entities (j/quoted \`)}))
 
 (defn Insert-multi
   "Inserts multiple rows in specified table"
   [db table rows]
-  (try
-    (j/with-db-transaction [t-con db]
-      (j/insert-multi! t-con table rows))
-    (catch Exception e (.getMessage e))))
+  (j/with-db-transaction [t-con db]
+    (j/insert-multi! t-con table rows)))
 
 (defn Update
   "Updates columns in the specified table"
   [db table row where-clause]
-  (try
-    (j/update! db table row where-clause {:entities (j/quoted \`)})
-    (catch Exception e (.getMessage e))))
+  (j/update! db table row where-clause {:entities (j/quoted \`)}))
 
 (defn Delete
   "Deletes columns in a specified table"
   [db table where-clause]
-  (try
-    (j/delete! db table where-clause {:entities (j/quoted \`)})
-    (catch Exception e (.getMessage e))))
+  (j/delete! db table where-clause {:entities (j/quoted \`)}))
 
 (defn Save
   "Updates columns or inserts a new row in the specified table"
   [db table row where-clause]
-  (try
-    (j/with-db-transaction [t-con db]
-      (let [result (j/update! t-con table row where-clause {:entities (j/quoted \`)})]
-        (if (zero? (first result))
-          (j/insert! t-con table row {:entities (j/quoted \`)})
-          result)))
-    (catch Exception e (.getMessage e))))
+  (j/with-db-transaction [t-con db]
+    (let [result (j/update! t-con table row where-clause {:entities (j/quoted \`)})]
+      (if (zero? (first result))
+        (j/insert! t-con table row {:entities (j/quoted \`)})
+        result))))
 
 (defn crud-fix-id
   [v]
-  (try
-    (if (clojure.string/blank? v) (Integer. 0) v)
-    (catch Exception e (.getMessage e))))
+  (if (clojure.string/blank? v) (Integer. 0) v))
 
 (defn crud-capitalize-words
   "Capitalize words"
   [s]
-  (try
-    (->> (clojure.string/split (str s) #"\b")
-         (map clojure.string/capitalize)
-         (clojure.string/join))
-    (catch Exception e (.getMessage e))))
+  (->> (clojure.string/split (str s) #"\b")
+       (map clojure.string/capitalize)
+       (clojure.string/join)))
 
 (defn crud-format-date-internal
   "Convert a MM/dd/yyyy format date to yyyy-MM-dd format using a string as a date
    eg. 02/01/1997 -> 1997-02-01"
   [s]
   (if (not-empty s)
-    (try
-      (.format
-       (SimpleDateFormat. "yyyy-MM-dd")
-       (.parse
-        (SimpleDateFormat. "MM/dd/yyyy") s))
-      (catch Exception e (.getMessage e)))
+    (.format
+     (SimpleDateFormat. "yyyy-MM-dd")
+     (.parse
+      (SimpleDateFormat. "MM/dd/yyyy") s))
+
     nil))
 
 (defn get-table-describe
   [table]
-  (try
-    (Query db (str "DESCRIBE " table))
-    (catch Exception e (.getMessage e))))
+  (Query db (str "DESCRIBE " table)))
 
 (defn get-table-columns
   [table]
-  (try
-    (map #(keyword (:field %)) (get-table-describe table))
-    (catch Exception e (.getMessage e))))
+  (map #(keyword (:field %)) (get-table-describe table)))
 
 (defn get-table-types [table]
-  (try
-    (map #(keyword (:type %)) (get-table-describe table))
-    (catch Exception e (.getMessage e))))
+  (map #(keyword (:type %)) (get-table-describe table)))
 
 (defn process-field
   [params field field-type]
-  (try
-    (let [value (str ((keyword field) params))
-          field-type (st/lower-case field-type)]
-      (cond
-        (st/includes? field-type "varchar") value
-        (st/includes? field-type "char") (st/upper-case value)
-        (st/includes? field-type "int") (if (clojure.string/blank? value) 0 value)
+  (let [value (str ((keyword field) params))
+        field-type (st/lower-case field-type)]
+    (cond
+      (st/includes? field-type "varchar") value
+      (st/includes? field-type "char") (st/upper-case value)
+      (st/includes? field-type "int") (if (clojure.string/blank? value) 0 value)
         ;;(st/includes? field-type "date") (crud-format-date-internal value)
-        :else value))
-    (catch Exception e (.getMessage e))))
+      :else value)))
 
 (defn build-postvars
   "Build post vars for table and process by type"
   [table params]
-  (try
-    (let [td (get-table-describe table)]
-      (into {}
-            (map (fn [x]
-                   (when ((keyword (:field x)) params)
-                     {(keyword (:field x))
-                      (process-field params (:field x) (:type x))})) td)))
-    (catch Exception e (.getMessage e))))
+  (let [td (get-table-describe table)]
+    (into {}
+          (map (fn [x]
+                 (when ((keyword (:field x)) params)
+                   {(keyword (:field x))
+                    (process-field params (:field x) (:type x))})) td))))
 
 (defn build-form-field
   [d]
-  (try
-    (let [field (:field d)
-          field-type (:type d)]
-      (cond
+  (let [field (:field d)
+        field-type (:type d)]
+    (cond
         ;;(= field-type "date") (str "DATE_FORMAT(" field "," "'%m/%d/%Y') as " field)
-        (= field-type "time") (str "TIME_FORMAT(" field "," "'%H:%i') as " field)
-        :else field))
-    (catch Exception e (.getMessage e))))
+      (= field-type "time") (str "TIME_FORMAT(" field "," "'%H:%i') as " field)
+      :else field)))
 
 (defn get-table-key
   [d]
-  (try
-    (:field (first (filter #(= (:key %) "PRI") d)))
-    (catch Exception e (.getMessage e))))
+  (:field (first (filter #(= (:key %) "PRI") d))))
 
 (defn build-form-row
   "Builds form row"

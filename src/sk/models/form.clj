@@ -1,6 +1,7 @@
 (ns sk.models.form
-  (:require [ring.util.anti-forgery :refer [anti-forgery-field]]
-            [sk.migrations :refer [config]]))
+  (:require
+   [ring.util.anti-forgery :refer [anti-forgery-field]]
+   [sk.migrations :refer [config]]))
 
 (defn password-form
   [title]
@@ -138,7 +139,7 @@
        (map (partial (fn [option]
                        (list
                         [:option {:value (:value option)
-                                  :selected (if (= (:value args) (:value option)) true false)} (:label option)]))) (:options args))]])))
+                                  :selected (if (= (:value args) (:value option)) true false)} (:label option)]))) options)]])))
 
 (defn build-radio
   [args]
@@ -247,35 +248,35 @@
                 :name "nombre"
                 :placeholder "El nombre aqui..."
                 :required false
-                :value (:nombre row)})
+                :value (:nombre "row")})
   (build-field {:label "Email" ;; email field example
                 :type "email"
                 :id "correo_electronico"
                 :name "correo_electronico"
                 :placeholder "El correo electronico aqui!"
                 :required false
-                :value (:correo_electronico row)})
+                :value (:correo_electronico "row")})
   (build-field {:label "Buscar contacto"
                 :type "search"
                 :id "buscar_contacto"
                 :name "buscar_contacto"
                 :placeholder "Busqueda aqui!"
                 :required false
-                :value (:buscar_contacto row)})
+                :value (:buscar_contacto "row")})
   (build-field {:label "Celular" ;; phone field example
                 :type "tel"
                 :id "celular"
                 :name "celular"
                 :placeholder "Celular aqui!"
                 :required false
-                :value (:celular row)})
+                :value (:celular "row")})
   (build-field {:label "URL" ;; url field exampl
                 :type "url"
                 :id "url_pagina"
                 :name "url_pagina"
                 :placeholder "url de pagina aqui!"
                 :required false
-                :value (:url_pagina row)})
+                :value (:url_pagina "row")})
   (build-field {:label "Edad" ;; number field example
                 :type "number"
                 :id "edad"
@@ -285,13 +286,13 @@
                 :step "1"
                 :placeholder "Edad aqui!"
                 :required false
-                :value (:edad row)})
+                :value (:edad "row")})
   (build-field {:label "Fecha de Nacimiento" ;; date field example
                 :type "date"
                 :id "nacimiento"
                 :name "nacimiento"
                 :required false
-                :value (:nacimiento row)})
+                :value (:nacimiento "row")})
   (build-field {:label "Cuando estaras disponible este verano?" ;; date with controls- does not work on all browsers
                 :type "date"
                 :id "disponible_fecha"
@@ -299,22 +300,22 @@
                 :min "2024-06-01"
                 :max "2024-08-31"
                 :step "7"
-                :balue (:disponible_fecha row)})
+                :balue (:disponible_fecha "row")})
   (build-field {:label "Mes" ;; month field example - does not work on all browsers
                 :type "month"
                 :id "mes"
                 :name "mes"
                 :required false
-                :value (:mes row)})
+                :value (:mes "row")})
   (build-field {:label "Semana" ;; week field example - does not work on all browsers
                 :type "week"
                 :id "semana"
                 :name "semana"
                 :required false
-                :value (:semana row)})
+                :value (:semana "row")})
   (build-field {:label "Escoja un color" ;; color field example
                 :type "color"
                 :id "color"
                 :name "color"
                 :required false
-                :value (:color row)}))
+                :value (:color "row")}))

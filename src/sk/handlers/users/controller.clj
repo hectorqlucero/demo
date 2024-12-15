@@ -1,8 +1,9 @@
 (ns sk.handlers.users.controller
-  (:require [sk.layout :refer [application]]
-            [sk.models.util :refer [get-session-id]]
-            [sk.handlers.users.model :refer [get-users]]
-            [sk.handlers.users.view :refer [users-view]]))
+  (:require
+   [sk.handlers.users.model :refer [get-users]]
+   [sk.handlers.users.view :refer [users-view]]
+   [sk.layout :refer [application]]
+   [sk.models.util :refer [get-session-id]]))
 
 (defn users
   [_]

@@ -1,13 +1,12 @@
 (ns sk.handlers.home.controller
-  (:require [sk.layout :refer [application error-404]]
-            [sk.handlers.home.view :refer [main-view change-password-view]]
-            [noir.response :refer [redirect]]
-            [noir.session :as session]
-            [noir.util.crypt :as crypt]
-            [sk.handlers.home.model :refer [get-user
-                                            get-users
-                                            update-password]]
-            [sk.models.util :refer [get-session-id]]))
+  (:require
+   [noir.response :refer [redirect]]
+   [noir.session :as session]
+   [noir.util.crypt :as crypt]
+   [sk.handlers.home.model :refer [get-user get-users update-password]]
+   [sk.handlers.home.view :refer [change-password-view main-view]]
+   [sk.layout :refer [application error-404]]
+   [sk.models.util :refer [get-session-id]]))
 
 (defn main
   [_]
@@ -52,7 +51,6 @@
 (defn process-password
   [{params :params}]
   (let [username (:email params)
-        where-clause ["username = ?" username]
         password (crypt/encrypt (:password params))
         row (first (get-user username))
         active (:active row)]

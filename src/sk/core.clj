@@ -1,17 +1,18 @@
 (ns sk.core
-  (:require [compojure.core :refer [defroutes routes]]
-            [compojure.route :as route]
-            [noir.response :refer [redirect]]
-            [noir.session :as session]
-            [ring.adapter.jetty :as jetty]
-            [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
-            [ring.middleware.multipart-params :refer [wrap-multipart-params]]
-            [ring.middleware.session :refer [wrap-session]]
-            [ring.middleware.session.cookie :refer [cookie-store]]
-            [sk.migrations :refer [config]]
-            [sk.models.crud :refer [KEY]]
-            [sk.routes.proutes :refer [proutes]]
-            [sk.routes.routes :refer [open-routes]])
+  (:require
+   [compojure.core :refer [defroutes routes]]
+   [compojure.route :as route]
+   [noir.response :refer [redirect]]
+   [noir.session :as session]
+   [ring.adapter.jetty :as jetty]
+   [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
+   [ring.middleware.multipart-params :refer [wrap-multipart-params]]
+   [ring.middleware.session :refer [wrap-session]]
+   [ring.middleware.session.cookie :refer [cookie-store]]
+   [sk.migrations :refer [config]]
+   [sk.models.crud :refer [KEY]]
+   [sk.routes.proutes :refer [proutes]]
+   [sk.routes.routes :refer [open-routes]])
   (:gen-class))
 
 ;; Middleware for handling login

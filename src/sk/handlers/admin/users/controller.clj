@@ -1,15 +1,11 @@
 (ns sk.handlers.admin.users.controller
-  (:require [sk.layout :refer [application
-                               error-404]]
-            [sk.models.util :refer [get-session-id]]
-            [sk.models.crud :refer [build-form-save
-                                    build-form-delete]]
-            [sk.handlers.admin.users.model :refer [get-users
-                                                   get-user]]
-            [sk.handlers.admin.users.view :refer [users-view
-                                                  users-edit-view
-                                                  users-add-view
-                                                  users-modal-script]]))
+  (:require
+   [sk.handlers.admin.users.model :refer [get-user get-users]]
+   [sk.handlers.admin.users.view :refer [users-add-view users-edit-view
+                                         users-modal-script users-view]]
+   [sk.layout :refer [application error-404]]
+   [sk.models.crud :refer [build-form-delete build-form-save]]
+   [sk.models.util :refer [get-session-id]]))
 
 (defn users
   [_]

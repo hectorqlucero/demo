@@ -1,6 +1,6 @@
 (ns sk.models.grid
-  (:require [clojure.string :as st]
-            [ring.util.anti-forgery :refer [anti-forgery-field]]))
+  (:require
+   [clojure.string :as st]))
 
 ;; start build-gid
 (defn build-grid-head
@@ -105,7 +105,7 @@
 
 ;; Start build-modal
 (defn build-modal
-  [title row form]
+  [title _ form]
   (list
    [:div.modal.fade {:id "exampleModal"
                      :tabindex "-1"

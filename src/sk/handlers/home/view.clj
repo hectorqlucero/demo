@@ -1,5 +1,6 @@
 (ns sk.handlers.home.view
-  (:require [sk.models.form :refer [login-form password-form]]))
+  (:require
+   [sk.models.form :refer [login-form password-form]]))
 
 (defn main-view
   "This creates the login form and we are passing the title from the controller"
