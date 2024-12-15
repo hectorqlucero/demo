@@ -1,6 +1,5 @@
 (ns sk.handlers.users.model
-  (:require
-   [sk.models.crud :refer [db Query]]))
+  (:require [sk.models.crud :refer [Query db]]))
 
 ;; Start get-users
 (def get-users-sql

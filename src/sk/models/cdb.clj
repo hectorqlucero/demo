@@ -1,7 +1,6 @@
 (ns sk.models.cdb
-  (:require
-   [noir.util.crypt :as crypt]
-   [sk.models.crud :refer [db Insert-multi Query! safe-try]]))
+  (:require [noir.util.crypt :as crypt]
+            [sk.models.crud :refer [db Insert-multi Query!]]))
 
 (def users-rows
   [{:lastname  "User"
@@ -37,5 +36,4 @@
   (Query! db "UNLOCK TABLES;"))
 
 (defn database []
-  (safe-try
-   (populate-tables "users" users-rows)))
+  (populate-tables "users" users-rows))

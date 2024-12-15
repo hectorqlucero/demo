@@ -1,8 +1,7 @@
 (ns sk.routes.proutes
-  (:require
-   [compojure.core :refer [defroutes GET POST]]
-   [sk.handlers.admin.users.controller :as users-controller]
-   [sk.handlers.users.controller :as users-dashboard]))
+  (:require [compojure.core :refer [defroutes GET POST]]
+            [sk.handlers.admin.users.controller :as users-controller]
+            [sk.handlers.users.controller :as users-dashboard]))
 
 (defroutes proutes
   (GET "/admin/users" params [] (users-controller/users params))

@@ -1,6 +1,6 @@
 (ns sk.handlers.admin.users.model
-  (:require
-   [sk.models.crud :refer [db Query]]))
+  (:require [sk.models.crud :refer [Query db]]
+            [clojure.string :as st]))
 
 ;; Start get-users
 (def get-users-sql
