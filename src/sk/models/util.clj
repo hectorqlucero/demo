@@ -4,11 +4,6 @@
    [sk.migrations :refer [config]]
    [sk.models.crud :refer [db Query]]))
 
-(defn find-require
-  "Find the require for a namespace in all namespaces"
-  [cmd]
-  (clojure.repl/apropos cmd))
-
 (defn get-session-id []
   (try
     (if (session/get :user_id) (session/get :user_id) 0)
