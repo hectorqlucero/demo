@@ -2,7 +2,8 @@
   (:require
    [noir.session :as session]
    [sk.migrations :refer [config]]
-   [sk.models.crud :refer [db Query]]))
+   [sk.models.crud :refer [db Query]]
+   [clojure.core :refer [random-uuid]]))
 
 (defn get-session-id []
   (try
