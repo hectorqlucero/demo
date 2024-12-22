@@ -3,14 +3,14 @@
   :url "http://example.com/FIXME" ; Change me - optional (no requerido)
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
             :url "https://www.eclipse.org/legal/epl-2.0/"}
-  :dependencies [[org.clojure/clojure "1.11.3"]
+  :dependencies [[org.clojure/clojure "1.12.0"]
                  [org.clojure/data.csv "1.1.0"]
                  [compojure "1.7.1"]
                  [hiccup "1.0.5"]
                  [lib-noir "0.9.9"]
                  [com.draines/postal "2.0.5"]
                  [cheshire "5.13.0"]
-                 [clj-pdf "2.6.8"]
+                 [clj-pdf "2.7.0"]
                  [ondrs/barcode "0.1.0"]
                  [pdfkit-clj "0.1.7"]
                  [cljfmt "0.9.2"]
@@ -21,12 +21,12 @@
                  [org.clojure/data.codec "0.2.0"]
                  [mysql/mysql-connector-java "8.0.33"]
                  [ragtime "0.8.1"]
-                 [ring/ring-core "1.12.2"]]
+                 [ring/ring-core "1.13.0"]]
   :main ^:skip-aot sk.core
   :aot [sk.core]
   :plugins [[lein-ancient "0.7.0"]
             [lein-pprint "1.3.2"]
-            [cider/cider-nrepl "0.50.0"]]
+            [cider/cider-nrepl "0.50.3"]]
   :uberjar-name "demo.jar" ; Change me
   :target-path "target/%s"
   :ring {:handler sk.core
