@@ -55,7 +55,7 @@
         row (first (get-user username))
         active (:active row)]
     (if (= active "T")
-      (if (seq (update-password username password))
+      (if (> (update-password username password) 0)
         (error-404 "Su contraseña se cambio correctamente!" "/home/login")
         (error-404 "No se pudo cambiar su contraseña" "/home/login"))
       (error-404 "No se pudo cambiar su contraseña!" "/home/login"))))

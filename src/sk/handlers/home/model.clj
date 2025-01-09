@@ -13,8 +13,8 @@
 (defn update-password
   [username password]
   (let [where-clause ["username = ?" username]
-        result (Update db :users {:password password} where-clause)]
-    result))
+        result (first (Update db :users {:password password} where-clause))]
+    (Integer. result)))
 
 (comment
   (get-user "sistema@gmail.com")
