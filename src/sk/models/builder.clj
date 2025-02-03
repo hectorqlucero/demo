@@ -2,6 +2,7 @@
   (:require
    [clojure.java.io :as io]
    [clojure.string :as st]
+   [sk.models.routes :refer [process-grid-routes process-dashboard-routes]]
    [sk.models.crud :refer [get-table-describe]]))
 
 (defn create-path [path]
@@ -224,6 +225,7 @@
     :secure 1
     :link (str "/admin/" table)
     :root "src/sk/handlers/admin/"})
+  (process-grid-routes)
   (println (str "Codigo generado en: src/sk/handlers/admin/" table)))
 ;; End build-grid
 
@@ -326,6 +328,7 @@
     :secure 3
     :link (str "/" table)
     :root "src/sk/handlers/"})
+  (process-dashboard-routes)
   (println (str "Codigo generado en: src/sk/handlers/" table)))
 ;; End build-dashboard
 
