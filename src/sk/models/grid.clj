@@ -90,6 +90,7 @@
   (list
    [:div.table-responsive
     [:table.table.table-sm {:id table-id
+                            :data-show-export "true"
                             :data-locale "es-MX"
                             :data-toggle "table"
                             :data-show-columns "true"

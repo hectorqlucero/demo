@@ -101,8 +101,11 @@
   (list
    (include-js "/js/jquery.min.js")
    (include-js "/bootstrap5/js/bootstrap.bundle.min.js")
-   (include-js "/bootstrap-table-master/dist/bootstrap-table.min.js")
-   (include-js "/bootstrap-table-master/dist/extensions/print/bootstrap-table-print.min.js")
+   (include-js "/bootstrap-table-master/dist/extensions/export/tableExport.min.js")
+   (include-js "/bootstrap-table-master/dist/extensions/export/jspdf.umd.min.js")
+   (include-js "/bootstrap-table-master/dist/extensions/export/bootstrap-table.min.js")
+   (include-js "/bootstrap-table-master/dist/extensions/export/bootstrap-table-export.min.js")
+   (include-js "/bootstrap-table-master/dist/extensions/export/bootstrap-table-print.min.js")
    (include-js "/bootstrap-table-master/dist/locale/bootstrap-table-es-MX.min.js")
    (include-js "/js/extra.js")))
 
