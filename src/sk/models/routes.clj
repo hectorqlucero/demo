@@ -29,7 +29,7 @@
 (defn build-require
   "Genera archivos requeridos para un dashboard para una tabla"
   [table]
-  (let [data (str "    [sk.handlers." table ".controller :as " table "-dashboard]")]
+  (let [data (str "   [sk.handlers." table ".controller :as " table "-dashboard]")]
     data))
 
 (defn insert-lines-after-search [file-path lines-to-insert search-str]
