@@ -98,6 +98,32 @@
     });
     ")])
 
+(defn build-dashboard-image
+  [row]
+  [:div {:style "float:left;margin-right:2px;"}
+   [:img#image1 {:width "32"
+                 :height "32"
+                 :src (str (:path config) (:imagen row))
+                 :onError "this.src='/images/placeholder_profile.png'"
+                 :style "margin-right:wpx;cursor:pointer;"}]])
+
+(defn build-dashboard-image-script
+  []
+  [:script
+   (str
+    "
+    $(document).ready(function() {
+      $('img').click(function() {
+        var img = $(this);
+        if(img.width() < 500) {
+          img.animate({width: '500', height: '500'}, 1000);
+        } else {
+          img.animate({width: img.attr(\"width\"), height: img.attr(\"height\")}, 1000);
+        }
+      });
+    });
+    ")])
+
 (defn build-field
   "args:label,type,id,name,placeholder,required,error,value"
   [args]
