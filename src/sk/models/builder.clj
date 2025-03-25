@@ -169,7 +169,7 @@
      "[title rows]\n"
      "(let [labels [" (apply str (map (fn [col] (str " " "\"" (st/upper-case (:field col)) "\"")) cols)) "]\n"
      "db-fields [" (apply str (map (fn [col] (str " " (keyword (:field col)))) cols)) "]\n"
-     "fields (zipmap db-fields labels)\n"
+     "fields (apply array-map (interleave dbfields labels))\n"
      "table-id \"" folder "_table\"\n"
      "args {:new true :edit true :delete true}\n"
      "href \"" link "\"]\n"
@@ -305,7 +305,7 @@
      "(let [table-id \"" folder "_table\"\n"
      "labels [" (apply str (map (fn [col] (str " " "\"" (st/upper-case (:field col)) "\"")) cols)) "]\n"
      "db-fields [" (apply str (map (fn [col] (str " " (keyword (:field col)))) cols)) "]\n"
-     "fields (zipmap db-fields labels)]\n"
+     "fields (apply array-map (interleave dbfields labels)]\n"
      "(build-dashboard title rows table-id fields)))\n")))
 
 (defn build-dashboard-skeleton

@@ -19,7 +19,7 @@
                    :cell
                    :level_formatted
                    :active_formatted]
-        fields (zipmap db-fields labels)]
+        fields (apply array-map (interleave db-fields labels))]
     (build-dashboard title rows table-id fields)))
 
 (comment
