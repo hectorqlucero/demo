@@ -169,7 +169,7 @@
      "[title rows]\n"
      "(let [labels [" (apply str (map (fn [col] (str " " "\"" (st/upper-case (:field col)) "\"")) cols)) "]\n"
      "db-fields [" (apply str (map (fn [col] (str " " (keyword (:field col)))) cols)) "]\n"
-     "fields (apply array-map (interleave dbfields labels))\n"
+     "fields (apply array-map (interleave db-fields labels))\n"
      "table-id \"" folder "_table\"\n"
      "args {:new true :edit true :delete true}\n"
      "href \"" link "\"]\n"
