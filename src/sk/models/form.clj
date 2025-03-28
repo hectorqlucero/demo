@@ -88,13 +88,15 @@
   [:script
    (str
     "
-    $('#image1').click(function() {
-      var img = $('#image1');
-      if(img.width() < 500) {
-        img.animate({width: '500', height: '500'}, 1000);
-      } else {
-        img.animate({width: img.attr(\"width\"), height: img.attr(\"height\")}, 1000);
-      }
+    $(document).ready(function() {
+      $('img').click(function() {
+        var img = $(this);
+        if(img.width() < 500) {
+          img.animate({width: '500', height: '500'}, 1000);
+        } else {
+          img.animate({width: img.attr(\"width\"), height: img.attr(\"height\")}, 1000);
+        }
+      });
     });
     ")])
 
