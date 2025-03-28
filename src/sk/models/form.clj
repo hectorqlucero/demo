@@ -100,12 +100,13 @@
 
 (defn build-dashboard-image
   [row]
-  [:div {:style "float:left;margin-right:2px;"}
-   [:img#image1 {:width "32"
-                 :height "32"
-                 :src (str (:path config) (:imagen row))
-                 :onError "this.src='/images/placeholder_profile.png'"
-                 :style "margin-right:wpx;cursor:pointer;"}]])
+  (list
+   [:div {:style "float:left;margin-right:2px;"}
+    [:img#image1 {:width "32"
+                  :height "32"
+                  :src (str (:path config) (:imagen row))
+                  :onError "this.src='/images/placeholder_profile.png'"
+                  :style "margin-right:wpx;cursor:pointer;"}]]))
 
 (defn build-dashboard-image-script
   []
