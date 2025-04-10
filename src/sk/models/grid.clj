@@ -109,6 +109,8 @@
   [title _ form]
   (list
    [:div.modal.fade {:id "exampleModal"
+                     :data-bs-backdrop "static"
+                     :data-bs-keyboard "false"
                      :tabindex "-1"
                      :aria-labelledby "exampleModalLabel"
                      :aria-hidden "true"}
