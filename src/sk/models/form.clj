@@ -24,8 +24,8 @@
                             :type "password"
                             :style "margin-bottom:5px;"
                             :placeholder "Tu contraseña aqui..."}]]
-     [:input.btn.btn-primary {:type "submit"
-                              :value "Cambiar Contraseña"}]]]))
+     [:input.btn.btn-outline-success {:type "submit"
+                                      :value "Cambiar Contraseña"}]]]))
 
 (defn login-form
   [title href]
@@ -56,11 +56,11 @@
                             :oninput "this.setCustomValidity('')"
                             :placeholder "Contraseña aqui..."
                             :type "Password"}]]
-     [:input.btn.btn-primary {:type "submit"
-                              :value "Ingresar al sitio"
-                              :style "margin-right:2px;"}]
-     [:a.btn.btn-secondary {:role "button"
-                            :href "/change/password"} "Cambiar Contraseña"]]]))
+     [:input.btn.btn-outline-success {:type "submit"
+                                      :value "Ingresar al sitio"
+                                      :style "margin-right:2px;"}]
+     [:a.btn.btn-outline-info {:role "button"
+                               :href "/change/password"} "Cambiar Contraseña"]]]))
 ;; Start form
 (defn build-hidden-field
   "args:type,id,name,value"
@@ -189,28 +189,28 @@
 (defn build-primary-input-button
   "args: type,value"
   [args]
-  [:input.btn.btn-primary {:type (:type args)
-                           :style "padding:5px;margin:5px;"
-                           :value (:value args)}])
+  [:input.btn.btn-outline-success {:type (:type args)
+                                   :style "padding:5px;margin:5px;"
+                                   :value (:value args)}])
 
 (defn build-secondary-input-button
   "args: type,value"
   [args]
-  [:input.btn.btn-secondary {:type (:type args)
-                             :style "padding:5px;margin:5px;"
-                             :value (:value args)}])
+  [:input.btn.btn-outline-info {:type (:type args)
+                                :style "padding:5px;margin:5px;"
+                                :value (:value args)}])
 
 (defn build-primary-anchor-button
   "args: label,href"
   [args]
-  [:a.btn.btn-primary {:type "button"
-                       :href (:href (:href args))} (:label args)])
+  [:a.btn.btn-outline-success {:type "button"
+                               :href (:href (:href args))} (:label args)])
 
 (defn build-secondary-anchor-button
   "args: label,href"
   [args]
-  [:a.btn.btn-secondary {:type "button"
-                         :href (:href (:href args))} (:label args)])
+  [:a.btn.btn-outline-info {:type "button"
+                            :href (:href (:href args))} (:label args)])
 
 (defn build-modal-buttons
   [& args]
@@ -218,11 +218,11 @@
         view (:view args)]
     (list
      (when-not (= view true)
-       [:input.btn.btn-primary {:type "submit"
-                                :style "padding:5px;margin:5px;"
-                                :value "Processar"}])
-     [:button.btn.btn-secondary {:type "button"
-                                 :data-bs-dismiss "modal"} "Cancelar"])))
+       [:input.btn.btn-outline-success {:type "submit"
+                                        :style "padding:5px;margin:5px;"
+                                        :value "Processar"}])
+     [:button.btn.btn-outline-info {:type "button"
+                                    :data-bs-dismiss "modal"} "Cancelar"])))
 (defn form
   [href fields buttons]
   (list
