@@ -54,7 +54,7 @@
                             :data-search "true"
                             :data-pagination "true"
                             :data-key-events "true"}
-     [:caption title]
+     [:h3.text-center.text-info title]
      (if (seq args)
        (build-grid-head href fields (first args))
        (build-grid-head href fields))
@@ -99,7 +99,7 @@
                             :data-search "true"
                             :data-pagination "true"
                             :data-key-events "true"}
-     [:caption title]
+     [:h3.text-center.text-info title]
      (build-dashboard-head fields)
      (build-dashboard-body rows fields)]]))
 ;; End build-dashboard
