@@ -16,9 +16,9 @@
                      :data-field (key field)} (st/upper-case (val field))]))
 
             fields)
-       [:th.text-center [:a.btn.btn-primary {:role "button"
-                                             :class (str "btn btn-primary" (when (= new false) " disabled"))
-                                             :href (str href "/add")} "Nuevo Record"]]]])))
+       [:th.text-center [:a.btn.btn-outline-success {:role "button"
+                                                     :class (str "btn btn-outline-success" (when (= new false) " disabled"))
+                                                     :href (str href "/add")} "Nuevo Record"]]]])))
 
 (defn build-grid-body
   [rows href fields & args]
@@ -33,11 +33,11 @@
                               [:td ((key field) row)]) fields)
                        [:td.text-nowrap.text-center {:style "width:15%;"}
                         [:a {:role "button"
-                             :class (str "btn btn-primary" (when (= edit false) " disabled"))
+                             :class (str "btn btn-outline-warning" (when (= edit false) " disabled"))
                              :style "margin:1px;"
                              :href (str href "/edit/" (:id row))} "Editar"]
                         [:a {:role "button"
-                             :class (str "confirm btn btn-danger" (when (= delete false) " disabled"))
+                             :class (str "confirm btn btn-outline-danger" (when (= delete false) " disabled"))
                              :style "margin:1px;"
                              :href (str href "/delete/" (:id row))} "Borrar"]]])) rows)])))
 
