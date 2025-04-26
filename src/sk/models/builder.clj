@@ -3,7 +3,7 @@
    [clojure.java.io :as io]
    [clojure.string :as st]
    [sk.models.crud :refer [get-table-describe]]
-   [sk.models.routes :refer [process-grid process-dashboard]]))
+   [sk.models.routes :refer [process-grid process-dashboard process-reporte]]))
 
 (defn create-path [path]
   (.mkdir (io/file path)))
@@ -331,6 +331,18 @@
   (process-dashboard table)
   (println (str "Codigo generado en: src/sk/handlers/" table)))
 ;; End build-dashboard
+
+(defn build-report
+  [controller]
+  (build-dashboard-skeleton
+   {:folder controller
+    :title (st/capitalize controller)
+    :table controller
+    :secure 3
+    :link (str "/reportes/" controller)
+    :root "src/sk/handlers/reportes/"})
+  (process-reporte controller)
+  (println (str "Codigo genearado en: src/sk/handlers/reportes/" controller)))
 
 (comment
   (build-grid "contactos"))

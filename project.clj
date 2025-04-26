@@ -36,7 +36,8 @@
             "rollback" ["run" "-m" "sk.migrations/rollback"]
             "database" ["run" "-m" "sk.models.cdb/database"]
             "grid" ["run" "-m" "sk.models.builder/build-grid"]
-            "dashboard" ["run" "-m" "sk.models.builder/build-dashboard"]}
+            "dashboard" ["run" "-m" "sk.models.builder/build-dashboard"]
+            "report" ["run" "-m" "sk.models.builder/build-report"]}
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}
              :dev {:source-paths ["src" "dev"]

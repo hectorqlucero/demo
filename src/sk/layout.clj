@@ -5,6 +5,17 @@
    [sk.migrations :refer [config]]
    [sk.models.util :refer [user-level user-name]]))
 
+(defn build-reportes []
+  (list
+   nil
+   (when (or
+          (= (user-level) "A")
+          (= (user-level) "S"))
+     (list
+      nil
+      (when (= (user-level) "S")
+        nil)))))
+
 (defn build-admin []
   (list
    nil
@@ -36,6 +47,19 @@
        [:li.nav-item [:a.nav-link.active {:href "/"
                                           :aria-current "page"} "Inicio"]]
        [:li.nav-item [:a.nav-link {:href "/users"} "Dashboard"]]
+       (when
+        (or
+         (= (user-level) "U")
+         (= (user-level) "A")
+         (= (user-level) "S"))
+         [:li.nav-item.dropdown
+          [:a.nav-link.dropdown-toggle {:href "#"
+                                        :id "navdrop0"
+                                        :role "button"
+                                        :data-bs-toggle "dropdown"
+                                        :aria-expanded "false"} "Reportes"]
+          [:ul.dropdown-menu {:aria-labelledby "navdrop0"}
+           (build-reportes)]])
        (when
         (or
          (= (user-level) "U")

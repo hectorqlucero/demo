@@ -20,10 +20,23 @@
               "  (GET \"/" table "\" params [] (" table "-dashboard/" table " params))")]
     data))
 
+(defn build-defroutes-reporte
+  "Genera rutas especificas para un dashboard para una tabla"
+  [table]
+  (let [data (str
+              "  (GET \"/reportes/" table "\" params [] (" table "-reporte/" table " params))")]
+    data))
+
 (defn build-grid-require
   "Genera archivos requeridos para un grid para una tabla"
   [table]
   (let [data (str "   [sk.handlers.admin." table ".controller :as " table "-controller]")]
+    data))
+
+(defn build-reporte-require
+  "Genera archivos requeridos para un reporte para un controller"
+  [table]
+  (let [data (str "   [sk.handlers.reportes." table ".controller :as " table "-reporte]")]
     data))
 
 (defn build-require
@@ -63,6 +76,19 @@
   (insert-lines-after-search "src/sk/routes/proutes.clj"
                              [(build-defroutes table)]
                              "(defroutes proutes"))
+
+(defn process-reporte
+  "Actualiza proutes.clj"
+  [table]
+  (insert-lines-after-search "src/sk/routes/proutes.clj"
+                             [(build-reporte-require table)]
+                             "(:require")
+  (insert-lines-after-search "src/sk/routes/proutes.clj"
+                             [(build-defroutes-reporte table)]
+                             "(defroutes proutes"))
 (comment
+  (build-defroutes-reporte "users")
+  (build-reporte-require "users")
+  (process-reporte "users")
   (process-dashboard "amigos")
   (process-grid "amigos"))
