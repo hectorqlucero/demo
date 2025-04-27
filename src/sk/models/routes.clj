@@ -77,7 +77,7 @@
                              [(build-defroutes table)]
                              "(defroutes proutes"))
 
-(defn process-reporte
+(defn process-report
   "Actualiza proutes.clj"
   [table]
   (insert-lines-after-search "src/sk/routes/proutes.clj"
@@ -89,6 +89,6 @@
 (comment
   (build-defroutes-reporte "users")
   (build-reporte-require "users")
-  (process-reporte "users")
+  (process-report "users")
   (process-dashboard "amigos")
   (process-grid "amigos"))

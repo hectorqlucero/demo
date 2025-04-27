@@ -3,7 +3,7 @@
    [clojure.java.io :as io]
    [clojure.string :as st]
    [sk.models.crud :refer [get-table-describe]]
-   [sk.models.routes :refer [process-grid process-dashboard process-reporte]]))
+   [sk.models.routes :refer [process-grid process-dashboard process-report]]))
 
 (defn create-path [path]
   (.mkdir (io/file path)))
@@ -333,17 +333,93 @@
   (println (str "Codigo generado en: src/sk/handlers/" table)))
 ;; End build-dashboard
 
+;; Start build-dashboard
+(defn build-report-controller
+  [options]
+  (let [folder (:folder options)
+        titulo (:title options)
+        tabla (:table options)
+        root (:root options)
+        link (:link options)
+        security (:secure options)
+        ns-root (subs (str (st/replace root #"/" ".") folder) 4)]
+    (str
+     "(ns " ns-root ".controller\n"
+     "(:require [sk.layout :refer [application]]\n"
+     "[sk.models.util :refer [get-session-id]]\n"
+     "[" ns-root ".model :refer [get-" tabla "]]\n"
+     "[" ns-root ".view :refer [" tabla "-view]]))\n\n"
+     "(defn " folder "[_]\n"
+     "(let [title \"" titulo "\"\n"
+     "ok (get-session-id)\n"
+     "js nil\n"
+     "rows (get-" folder ")\n"
+     "content (" folder "-view title rows)]\n"
+     (process-security security) "))\n\n")))
+
+(defn build-report-model
+  [options]
+  (let [folder (:folder options)
+        tabla (:table options)
+        root (:root options)
+        link (:link options)
+        ns-root (subs (str (st/replace root #"/" ".") folder) 4)]
+    (str
+     "(ns " ns-root ".model\n"
+     "(:require [sk.models.crud :refer [Query db]]\n"
+     "[clojure.string :as st]))\n\n"
+     "(def get-" folder "-sql\n"
+     "(str\n"
+     "\"\n"
+     "SELECT *\n"
+     "FROM " tabla "\n"
+     "\"\n"
+     "))\n\n"
+     "(defn get-" folder "\n"
+     "[]\n"
+     "(Query db get-" folder "-sql))\n\n")))
+
+(defn build-report-view
+  [options]
+  (let [folder (:folder options)
+        tabla (:table options)
+        root (:root options)
+        link (:link options)
+        ns-root (subs (str (st/replace root #"/" ".") folder) 4)]
+    (str
+     "(ns " ns-root ".view\n"
+     "(:require [sk.models.grid :refer [build-dashboard]]))\n\n"
+     "(defn " folder "-view\n"
+     "[title rows]\n"
+     "(let [table-id \"" folder "_table\"\n"
+     "labels ["  "]\n"
+     "db-fields ["  "]\n"
+     "fields (apply array-map (interleave db-fields labels))]\n"
+     "(build-dashboard title rows table-id fields)))\n")))
+
+(defn build-report-skeleton
+  "secure: 1=s/a, 2=s, 3=all"
+  [options]
+  (let [folder (:folder options)
+        root (:root options)
+        path (str root folder)]
+    (create-path path)
+    (spit (str path "/controller.clj") (build-report-controller options))
+    (spit (str path "/model.clj") (build-report-model options))
+    (spit (str path "/view.clj") (build-report-view options))))
+
 (defn build-report
-  [controller]
-  (build-dashboard-skeleton
-   {:folder controller
-    :title (st/capitalize controller)
-    :table controller
+  [table]
+  (build-report-skeleton
+   {:folder table
+    :title (st/capitalize table)
+    :table table
     :secure 3
-    :link (str "/reportes/" controller)
+    :link (str "/reportes/" table)
     :root "src/sk/handlers/reportes/"})
-  (process-reporte controller)
-  (println (str "Codigo genearado en: src/sk/handlers/reportes/" controller)))
+  (process-report table)
+  (println (str "Codigo generado en: src/sk/handlers/reportes/" table)))
+;; End build-report
 
 (comment
   (build-grid "contactos"))
