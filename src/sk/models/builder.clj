@@ -155,6 +155,7 @@
   [options]
   (let [folder (:folder options)
         tabla (:table options)
+        titulo (:title options)
         root (:root options)
         link (:link options)
         ns-root (subs (str (st/replace root #"/" ".") folder) 4)
@@ -194,12 +195,12 @@
      "(defn " folder "-edit-view\n"
      "[title row rows]\n"
      "(list\n"
-     "(" folder "-view \"" folder " Manteniento\" rows)\n"
+     "(" folder "-view \"" titulo "\" rows)\n"
      "(build-" folder "-modal title row)))\n\n"
      "(defn " folder "-add-view\n"
      "[title row rows]\n"
      "(list\n"
-     "(" folder "-view \"" folder " Mantenimiento\" rows)\n"
+     "(" folder "-view \"" titulo "\" rows)\n"
      "(build-" folder "-modal title row)))\n\n"
      "(defn " folder "-modal-script\n"
      "[]\n"
