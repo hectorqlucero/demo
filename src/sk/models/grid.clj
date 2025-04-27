@@ -45,6 +45,7 @@
   [title rows table-id fields href & args]
   (list
    [:div.table-responsive
+    [:h3.text-center.text-info title]
     [:table.table.table-sm {:id table-id
                             :data-locale "es-MX"
                             :data-toggle "table"
@@ -54,7 +55,6 @@
                             :data-search "true"
                             :data-pagination "true"
                             :data-key-events "true"}
-     [:h3.text-center.text-info title]
      (if (seq args)
        (build-grid-head href fields (first args))
        (build-grid-head href fields))
@@ -89,6 +89,7 @@
   [title rows table-id fields]
   (list
    [:div.table-responsive
+    [:h3.text-center.text-info title]
     [:table.table.table-sm {:id table-id
                             :data-show-export "true"
                             :data-locale "es-MX"
@@ -99,7 +100,6 @@
                             :data-search "true"
                             :data-pagination "true"
                             :data-key-events "true"}
-     [:h3.text-center.text-info title]
      (build-dashboard-head fields)
      (build-dashboard-body rows fields)]]))
 ;; End build-dashboard
