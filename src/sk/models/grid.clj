@@ -7,101 +7,92 @@
   [href fields & args]
   (let [args (first args)
         new (:new args)]
-    (list
-     [:thead.table-light
-      [:tr
-       (map (fn [field]
-              (list
-               [:th {:data-sortable "true"
-                     :data-field (key field)} (st/upper-case (val field))]))
-
-            fields)
-       [:th.text-center [:a.btn.btn-outline-success {:role "button"
-                                                     :class (str "btn btn-outline-success" (when (= new false) " disabled"))
-                                                     :href (str href "/add")} "Nuevo Record"]]]])))
+    [:thead.table-light
+     (for [field fields]
+       [:th {:data-sortable "true"
+             :data-field (key field)} (st/upper-case (val field))])
+     [:th.text-center [:a.btn.btn-outline-success {:role "button"
+                                                   :class (str "btn btn-outline-success" (when (= new false) " disabled"))
+                                                   :href (str href "/add")} "Nuevo Record"]]]))
 
 (defn build-grid-body
   [rows href fields & args]
   (let [args (first args)
         edit (:edit args)
         delete (:delete args)]
-    (list
-     [:tbody
-      (map (partial (fn [row]
-                      [:tr
-                       (map (fn [field]
-                              [:td ((key field) row)]) fields)
-                       [:td.text-nowrap.text-center {:style "width:15%;"}
-                        [:a {:role "button"
-                             :class (str "btn btn-outline-warning" (when (= edit false) " disabled"))
-                             :style "margin:1px;"
-                             :href (str href "/edit/" (:id row))} "Editar"]
-                        [:a {:role "button"
-                             :class (str "confirm btn btn-outline-danger" (when (= delete false) " disabled"))
-                             :style "margin:1px;"
-                             :href (str href "/delete/" (:id row))} "Borrar"]]])) rows)])))
+    [:tbody
+     (for [row rows]
+       [:tr
+        (for [field fields]
+          [:td ((key field) row)])
+
+        [:td.text-center {:style "width:1%;white-space:nowrap;"}
+         [:a {:role "button"
+              :class (str "btn btn-outline-warning" (when (= edit false) " disabled"))
+              :style "margin:1px;"
+              :href (str href "/edit/" (:id row))} "Editar"]
+         [:a {:role "button"
+              :class (str "confirm btn btn-outline-danger" (when (= delete false) " disabled"))
+              :style "margin:1px;"
+              :href (str href "/delete/" (:id row))} "Borrar"]]])]))
 
 (defn build-grid
   [title rows table-id fields href & args]
-  (list
-   [:div.table-responsive
-    [:h3.text-center.text-info title]
-    [:table.table.table-sm {:id table-id
-                            :data-locale "es-MX"
-                            :data-toggle "table"
-                            :data-show-columns "true"
-                            :data-show-toggle "true"
-                            :data-show-print "false"
-                            :data-search "true"
-                            :data-pagination "true"
-                            :data-key-events "true"}
-     (if (seq args)
-       (build-grid-head href fields (first args))
-       (build-grid-head href fields))
-     (if (seq args)
-       (build-grid-body rows href fields (first args))
-       (build-grid-body rows href fields))]]))
+  [:div.table-responsive
+   [:h3.text-center.text-info title]
+   [:table.table.table-sm {:id table-id
+                           :data-locale "es-MX"
+                           :data-show-fullscreen "true"
+                           :data-toggle "table"
+                           :data-show-columns "true"
+                           :data-show-toggle "true"
+                           :data-show-print "false"
+                           :data-search "true"
+                           :data-pagination "true"
+                           :data-key-events "true"}
+    (if (seq args)
+      (build-grid-head href fields (first args))
+      (build-grid-head href fields))
+    (if (seq args)
+      (build-grid-body rows href fields (first args))
+      (build-grid-body rows href fields))]])
 ;; End build-grid
 
 ;; start build-dashboard
 (defn build-dashboard-head
   [fields]
-  (list
-   [:thead.table-light
-    [:tr
-     (map (fn [field]
-            (list
-             [:th {:data-sortable "true"
-                   :data-field (key field)} (st/upper-case (val field))]))
-
-          fields)]]))
+  [:thead.table-light
+   [:tr
+    (for [field fields]
+      [:th {:data-sortable "true"
+            :data-field (key field)} (st/upper-case (val field))])]])
 
 (defn build-dashboard-body
   [rows fields]
-  (list
-   [:tbody
-    (map (partial (fn [row]
-                    [:tr
-                     (map (fn [field]
-                            [:td ((key field) row)]) fields)])) rows)]))
+  [:tbody
+   (for [row rows]
+     [:tr
+      (for [field fields]
+        [:td ((key field) row)])])])
 
 (defn build-dashboard
   [title rows table-id fields]
-  (list
-   [:div.table-responsive
-    [:h3.text-center.text-info title]
-    [:table.table.table-sm {:id table-id
-                            :data-show-export "true"
-                            :data-locale "es-MX"
-                            :data-toggle "table"
-                            :data-show-columns "true"
-                            :data-show-toggle "true"
-                            :data-show-print "true"
-                            :data-search "true"
-                            :data-pagination "true"
-                            :data-key-events "true"}
-     (build-dashboard-head fields)
-     (build-dashboard-body rows fields)]]))
+  [:div.table-responsive
+   [:h3.text-center.text-info title]
+   [:table.table.table-sm {:id table-id
+                           :data-virtual-scroll "true"
+                           :data-show-export "true"
+                           :data-show-fullscreen "true"
+                           :data-locale "es-MX"
+                           :data-toggle "table"
+                           :data-show-columns "true"
+                           :data-show-toggle "true"
+                           :data-show-print "true"
+                           :data-search "true"
+                           :data-pagination "true"
+                           :data-key-events "true"}
+    (build-dashboard-head fields)
+    (build-dashboard-body rows fields)]])
 ;; End build-dashboard
 
 ;; Start build-modal
