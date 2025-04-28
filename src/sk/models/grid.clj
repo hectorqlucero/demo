@@ -10,9 +10,10 @@
     [:thead.table-light
      (for [field fields]
        [:th {:data-sortable "true"
-             :data-field (key field)} (st/upper-case (val field))])
+             :data-field (key field)
+             :style "white-space:nowrap;"} (st/upper-case (val field))])
      [:th.text-center [:a.btn.btn-outline-success {:role "button"
-                                                   :class (str "btn btn-outline-success" (when (= new false) " disabled"))
+                                                   :class (str "btn btn-sm btn-outline-success" (when (= new false) " disabled"))
                                                    :href (str href "/add")} "Nuevo Record"]]]))
 
 (defn build-grid-body
@@ -24,23 +25,25 @@
      (for [row rows]
        [:tr
         (for [field fields]
-          [:td ((key field) row)])
+          [:td {:style "white-space:nowrap;"} ((key field) row)])
 
-        [:td.text-center {:style "width:1%;white-space:nowrap;"}
-         [:a {:role "button"
-              :class (str "btn btn-outline-warning" (when (= edit false) " disabled"))
-              :style "margin:1px;"
-              :href (str href "/edit/" (:id row))} "Editar"]
-         [:a {:role "button"
-              :class (str "confirm btn btn-outline-danger" (when (= delete false) " disabled"))
-              :style "margin:1px;"
-              :href (str href "/delete/" (:id row))} "Borrar"]]])]))
+        [:td.text-center {:style "white-space:nowrap;width:128px;"}
+         [:div.d-inline-flex.gap-1
+          [:a {:role "button"
+               :class (str "btn btn-sm btn-outline-warning" (when (= edit false) " disabled"))
+               :style "margin:1px;"
+               :href (str href "/edit/" (:id row))} "Editar"]
+          [:a {:role "button"
+               :class (str "confirm btn btn-sm btn-outline-danger" (when (= delete false) " disabled"))
+               :style "margin:1px;"
+               :href (str href "/delete/" (:id row))} "Borrar"]]]])]))
 
 (defn build-grid
   [title rows table-id fields href & args]
   [:div.table-responsive
    [:h3.text-center.text-info title]
-   [:table.table.table-sm {:id table-id
+   [:table.table.table-sm {:style "table-layout:auto;width:100%"
+                           :id table-id
                            :data-locale "es-MX"
                            :data-show-fullscreen "true"
                            :data-toggle "table"
@@ -63,23 +66,27 @@
   [fields]
   [:thead.table-light
    [:tr
-    (for [field fields]
-      [:th {:data-sortable "true"
-            :data-field (key field)} (st/upper-case (val field))])]])
+    [:div.d-inline-flex.gap-1
+     (for [field fields]
+       [:th {:data-sortable "true"
+             :data-field (key field)
+             :style "white-space:nowrap;"} (st/upper-case (val field))])]]])
 
 (defn build-dashboard-body
   [rows fields]
   [:tbody
    (for [row rows]
      [:tr
-      (for [field fields]
-        [:td ((key field) row)])])])
+      [:div.d-inline-flex.gap-1
+       (for [field fields]
+         [:td {:style "white-space:nowrap"} ((key field) row)])]])])
 
 (defn build-dashboard
   [title rows table-id fields]
   [:div.table-responsive
    [:h3.text-center.text-info title]
-   [:table.table.table-sm {:id table-id
+   [:table.table.table-sm {:style "table-layout:auto;width:100%;"
+                           :id table-id
                            :data-virtual-scroll "true"
                            :data-show-export "true"
                            :data-show-fullscreen "true"
