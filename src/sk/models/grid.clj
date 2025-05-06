@@ -13,7 +13,7 @@
              :data-field (key field)} (st/upper-case (val field))])
      [:th.text-center {:style "white-space:nowrap;width:128px;"} [:a.btn.btn-outline-success {:role "button"
                                                                                               :class (str "btn btn-sm btn-outline-success" (when (= new false) " disabled"))
-                                                                                              :href (str href "/add")} "Nuevo Record"]]]))
+                                                                                              :href (str href "/add")} [:i.bi.bi-plus-lg] "Nuevo Record"]]]))
 
 (defn build-grid-body
   [rows href fields & args]
@@ -31,11 +31,11 @@
           [:a {:role "button"
                :class (str "btn btn-sm btn-outline-warning" (when (= edit false) " disabled"))
                :style "margin:1px;"
-               :href (str href "/edit/" (:id row))} "Editar"]
+               :href (str href "/edit/" (:id row))} [:i.bi.bi-pencil] "Editar"]
           [:a {:role "button"
                :class (str "confirm btn btn-sm btn-outline-danger" (when (= delete false) " disabled"))
                :style "margin:1px;"
-               :href (str href "/delete/" (:id row))} "Borrar"]]]])]))
+               :href (str href "/delete/" (:id row))} [:i.bi.bi-trash] "Borrar"]]]])]))
 
 (defn build-grid
   [title rows table-id fields href & args]
